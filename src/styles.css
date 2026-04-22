@@ -3,11 +3,18 @@
 :root {
   --primary: #000d2b;
   --secondary: #fdf6ea;
+
+  --pinkish: #e281b6;
+  --gold: #ffb12f;
+  --sage: #00735b;
 }
 
 @theme {
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
+  --color-pinkish: var(--pinkish);
+  --color-gold: var(--gold);
+  --color-sage: var(--sage);
 }
 
 * {
@@ -23,4 +30,5 @@ body,
 body {
   margin: 0;
   color: var(--primary);
+  font-family: 'Courier New', Courier, monospace;
 }
