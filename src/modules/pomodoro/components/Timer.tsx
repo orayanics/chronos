@@ -1,4 +1,4 @@
-import { LABEL_MAP } from "../constant";
+import { LABEL_FRIENDLY_MAP } from "../constant";
 import type { POMODORO_TYPE } from "../schema";
 import { pad } from "../util";
 
@@ -11,28 +11,15 @@ interface TimerProps {
 
 export default function Timer({ hours, minutes, seconds, mode }: TimerProps) {
 	return (
-		<div style={{ textAlign: "center" }}>
-			<div
-				style={{
-					fontSize: "0.65rem",
-					letterSpacing: "0.3em",
-					marginBottom: "0.75rem",
-				}}
-			>
-				{LABEL_MAP[mode]}
-			</div>
-			<div
-				style={{
-					fontSize: "clamp(4.5rem, 13vw, 8.5rem)",
-					fontWeight: 700,
-					lineHeight: 1,
-					letterSpacing: "-0.03em",
-				}}
-			>
+		<div className="text-center my-10">
+			<div className="text-6xl md:text-[120px] font-bold tabular-nums">
+				<p className="font-normal text-center text-xs text-primary/60">
+					{LABEL_FRIENDLY_MAP[mode]}
+				</p>
 				{pad(hours)}
-				<span style={{ opacity: 0.3 }}>:</span>
+				<span className="opacity-80">:</span>
 				{pad(minutes)}
-				<span style={{ opacity: 0.3 }}>:</span>
+				<span className="opacity-80">:</span>
 				{pad(seconds)}
 			</div>
 		</div>

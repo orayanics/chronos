@@ -16,13 +16,11 @@ export default function Stats({
 }: StatsProps) {
 	const data = total ?? [];
 	return (
-		<div className="space-y-4">
-			<p className="text-center uppercase tracking-wide text-primary/60">
-				STATS
-			</p>
-			<div className="flex gap-2">
+		<div className="space-y-2 w-full">
+			<p className="text-center text-xs text-primary/60">STATS</p>
+			<div className="grid grid-cols-3 gap-2">
 				<div
-					className="rounded-lg h-24 w-26 bg-sage text-center
+					className="rounded-lg p-2 bg-sage text-center
 				shadow-sm shadow-emerald-900 inset-shadow-sm inset-shadow-emerald-900 
 				flex flex-col justify-center items-center
 				text-secondary"
@@ -34,7 +32,7 @@ export default function Stats({
 				</div>
 
 				<div
-					className="rounded-lg h-24 w-26 bg-gold text-center
+					className="rounded-lg p-2 bg-gold text-center
 				shadow-sm shadow-amber-900 inset-shadow-sm inset-shadow-amber-900/60 
 				flex flex-col justify-center items-center
 				text-secondary"
@@ -46,7 +44,7 @@ export default function Stats({
 				</div>
 
 				<div
-					className="rounded-lg h-24 w-26 bg-pinkish text-center
+					className="rounded-lg p-2 bg-pinkish text-center
 				shadow-sm shadow-rose-900 inset-shadow-sm inset-shadow-rose-900/60
 				flex flex-col justify-center items-center
 				text-secondary"

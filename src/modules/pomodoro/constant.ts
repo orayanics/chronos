@@ -20,14 +20,14 @@ export const DEFAULT_SESSION: PSessionState = {
 	tasks: [],
 };
 
-export const ACCENT: Record<POMODORO_TYPE, string> = {
-	WORK: "#e8621a",
-	SHORT: "#3daa80",
-	LONG: "#4a82c4",
-};
-
 export const LABEL_MAP: Record<POMODORO_TYPE, string> = {
 	WORK: "FOCUS",
 	SHORT: "SHORT BREAK",
 	LONG: "LONG BREAK ",
+};
+
+export const LABEL_FRIENDLY_MAP: Record<POMODORO_TYPE, string> = {
+	WORK: "Time to Focus!",
+	SHORT: "Take a short break",
+	LONG: "Take a long break",
 };
