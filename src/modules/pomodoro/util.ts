@@ -22,9 +22,16 @@ export function pad(n: number) {
 export function formatTime(logs: PSessionLog[]): string {
 	const totalMinutes = logs
 		.filter((log) => log.type === "WORK")
-		.reduce((sum, log) => sum + log.duration, 0);
-	const hours = Math.floor(totalMinutes / 60);
-	const minutes = totalMinutes % 60;
+		.reduce((sum, log) => {
+			const dur =
+				typeof log.duration === "string"
+					? parseFloat(log.duration)
+					: Number(log.duration);
+			return sum + (Number.isNaN(dur) ? 0 : dur);
+		}, 0);
+	const totalRounded = Math.round(totalMinutes * 100) / 100;
+	const hours = Math.floor(totalRounded / 60);
+	const minutes = totalRounded % 60;
 	if (hours > 0 && minutes > 0) return `${hours}h ${minutes}m`;
 	if (hours > 0) return `${hours}h`;
 	return `${minutes}m`;

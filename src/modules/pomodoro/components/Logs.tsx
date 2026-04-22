@@ -6,7 +6,7 @@ interface LogsProps {
 }
 
 export default function Logs({ logs }: LogsProps) {
-	if (logs.length === 0) return null;
+	if (!logs || logs.length === 0) return null;
 	return (
 		<div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
 			<div

@@ -28,10 +28,10 @@ const Field = ({
 			<label htmlFor="input">{label}</label>
 			<input
 				type="number"
-				min={1}
 				value={settings[settingKey]}
 				onChange={(e) =>
-					onChange({ ...settings, [settingKey]: Math.max(1, +e.target.value) })
+					// onChange({ ...settings, [settingKey]: Math.max(1, +e.target.value) })
+					onChange({ ...settings, [settingKey]: e.target.value })
 				}
 			/>
 		</div>

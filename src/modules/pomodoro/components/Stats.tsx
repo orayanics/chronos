@@ -14,6 +14,7 @@ export default function Stats({
 	longBreaks,
 	total,
 }: StatsProps) {
+	const data = total ?? [];
 	return (
 		<div>
 			<p className="text-center uppercase tracking-wide text-primary/60">
@@ -32,7 +33,7 @@ export default function Stats({
 				<p className="text-amber-600">
 					LONG <span className="text-black">{longBreaks}</span>
 				</p>
-				{total.length > 0 && (
+				{data.length > 0 && (
 					<p>
 						{"| "}TOTAL <span>{formatTime(total)} </span>
 					</p>

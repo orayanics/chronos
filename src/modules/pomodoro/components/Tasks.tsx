@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { PTask } from "../schema";
 
 interface TasksProps {
-	tasks: PTask[];
+	tasks?: PTask[] | null;
 	onAdd: (text: string) => void;
 	onToggle: (id: string) => void;
 	onDelete: (id: string) => void;
@@ -33,7 +33,8 @@ export default function Tasks({
 		setEditText("");
 	};
 
-	const remaining = tasks.filter((t) => !t.completed).length;
+	const data = tasks ?? [];
+	const remaining = data.filter((t) => !t.completed).length;
 
 	return (
 		<div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -69,7 +70,7 @@ export default function Tasks({
 
 			{/* List */}
 			<div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-				{tasks.map((task) => (
+				{data.map((task) => (
 					<div
 						key={task.id}
 						style={{

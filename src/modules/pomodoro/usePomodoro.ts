@@ -107,7 +107,9 @@ export default function usePomodoro() {
 							? prev.longBreaksCompleted + 1
 							: prev.longBreaksCompleted,
 					currentCycleCount: nextCycleCount,
-					logs: [...prev.logs, logEntry],
+					logs: Array.isArray(prev.logs)
+						? [...prev.logs, logEntry]
+						: [logEntry],
 				};
 				return updated;
 			});
@@ -166,7 +168,7 @@ export default function usePomodoro() {
 		setSession((prev) => ({
 			...prev,
 			tasks: [
-				...prev.tasks,
+				...(Array.isArray(prev.tasks) ? prev.tasks : []),
 				{
 					id: crypto.randomUUID(),
 					text,
@@ -179,21 +181,27 @@ export default function usePomodoro() {
 	const toggleTask = (id: string) =>
 		setSession((prev) => ({
 			...prev,
-			tasks: prev.tasks.map((t) =>
-				t.id === id ? { ...t, completed: !t.completed } : t,
-			),
+			tasks: Array.isArray(prev.tasks)
+				? prev.tasks.map((t) =>
+						t.id === id ? { ...t, completed: !t.completed } : t,
+					)
+				: [],
 		}));
 
 	const deleteTask = (id: string) =>
 		setSession((prev) => ({
 			...prev,
-			tasks: prev.tasks.filter((t) => t.id !== id),
+			tasks: Array.isArray(prev.tasks)
+				? prev.tasks.filter((t) => t.id !== id)
+				: [],
 		}));
 
 	const updateTask = (id: string, text: string) =>
 		setSession((prev) => ({
 			...prev,
-			tasks: prev.tasks.map((t) => (t.id === id ? { ...t, text } : t)),
+			tasks: Array.isArray(prev.tasks)
+				? prev.tasks.map((t) => (t.id === id ? { ...t, text } : t))
+				: [],
 		}));
 
 	return {
