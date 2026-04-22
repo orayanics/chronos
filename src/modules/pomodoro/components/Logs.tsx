@@ -8,52 +8,40 @@ interface LogsProps {
 export default function Logs({ logs }: LogsProps) {
 	if (!logs || logs.length === 0) return null;
 	return (
-		<div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+		<>
+			<button type="button" className="fixed inset-0 bg-black/30 z-20" />
+
 			<div
-				style={{
-					fontSize: "0.6rem",
-					letterSpacing: "0.2em",
-					paddingBottom: "0.25rem",
-				}}
+				className={`fixed bottom-0 left-0 right-0 z-30 transition-transform duration-300 ease-in-out transform translate-y-0 bg-white p-6 rounded-t-lg shadow-lg mb-0`}
 			>
-				LOG
+				<p>Logs</p>
+				<div className="flex flex-col gap-2 max-h-64 overflow-y-auto">
+					{[...logs].reverse().map((log) => {
+						const ts = new Date(log.completedAt);
+						const label =
+							log.type === "WORK"
+								? "FOCUS"
+								: log.type === "SHORT"
+									? "SHORT"
+									: "LONG";
+						return (
+							<div key={log.id} className="flex justify-between">
+								<div>
+									<p>
+										{label}
+										<span className="text-primary/60 ms-4">
+											{log.duration}m
+										</span>
+									</p>
+								</div>
+								<span>
+									{pad(ts.getHours())}:{pad(ts.getMinutes())}
+								</span>
+							</div>
+						);
+					})}
+				</div>
 			</div>
-			<div
-				style={{
-					display: "flex",
-					flexDirection: "column",
-					gap: 0,
-					maxHeight: 180,
-					overflowY: "auto",
-				}}
-			>
-				{[...logs].reverse().map((log) => {
-					const ts = new Date(log.completedAt);
-					const label =
-						log.type === "WORK"
-							? "FOCUS"
-							: log.type === "SHORT"
-								? "SHORT"
-								: "LONG";
-					return (
-						<div
-							key={log.id}
-							style={{
-								display: "flex",
-								justifyContent: "space-between",
-								padding: "0.22rem 0",
-								fontSize: "0.62rem",
-							}}
-						>
-							<span style={{ width: 40 }}>{label}</span>
-							<span style={{ color: "#8a8680" }}>{log.duration}m</span>
-							<span>
-								{pad(ts.getHours())}:{pad(ts.getMinutes())}
-							</span>
-						</div>
-					);
-				})}
-			</div>
-		</div>
+		</>
 	);
 }

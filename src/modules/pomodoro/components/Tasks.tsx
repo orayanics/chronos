@@ -37,62 +37,35 @@ export default function Tasks({
 	const remaining = data.filter((t) => !t.completed).length;
 
 	return (
-		<div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-			<div
-				style={{
-					fontSize: "0.6rem",
-					letterSpacing: "0.2em",
-					paddingBottom: "0.25rem",
-				}}
-			>
-				TASKS — {remaining} remaining
-			</div>
+		<div className="space-y-4">
+			<div className="pb-4 space-y-2">
+				<p className="text-center text-xs text-primary/60">
+					TASKS — {remaining} remaining
+				</p>
 
-			{/* Add input */}
-			<div style={{ display: "flex", gap: "0.4rem" }}>
-				<input
-					value={input}
-					onChange={(e) => setInput(e.target.value)}
-					onKeyDown={(e) => e.key === "Enter" && commit()}
-					placeholder="Add a task..."
-					style={{
-						flex: 1,
-						padding: "0.45rem 0.65rem",
-						fontSize: "0.72rem",
-						fontFamily: "inherit",
-						outline: "none",
-					}}
-				/>
-				<button type="button" onClick={commit}>
-					+
-				</button>
-			</div>
-
-			{/* List */}
-			<div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-				{data.map((task) => (
-					<div
-						key={task.id}
-						style={{
-							display: "flex",
-							alignItems: "flex-start",
-							gap: "0.5rem",
-							padding: "0.5rem 0.6rem",
-						}}
+				<div className="flex gap-2">
+					<input
+						value={input}
+						onChange={(e) => setInput(e.target.value)}
+						onKeyDown={(e) => e.key === "Enter" && commit()}
+						placeholder="Add a task..."
+						className="border border-primary/60 w-full p-2 rounded-lg shadow-sm focus:outline-1"
+					/>
+					<button
+						type="button"
+						onClick={commit}
+						className="cursor-pointer shadow rounded-lg border p-2
+					transition bg-primary text-white hover:inset-shadow-secondary/20 hover:inset-shadow-sm"
 					>
-						{/* Checkbox */}
-						<button
-							type="button"
-							onClick={() => onToggle(task.id)}
-							style={{
-								flexShrink: 0,
-								width: 13,
-								height: 13,
-								marginTop: 2,
-								cursor: "pointer",
-								padding: 0,
-							}}
-						/>
+						+
+					</button>
+				</div>
+			</div>
+
+			<div className="flex flex-col gap-2">
+				{data.map((task) => (
+					<div key={task.id} className="flex gap-1 items-center">
+						<input type="checkbox" onChange={() => onToggle(task.id)} />
 
 						{editId === task.id ? (
 							<input
@@ -106,14 +79,7 @@ export default function Tasks({
 									}
 								}}
 								onBlur={() => commitEdit(task.id)}
-								style={{
-									flex: 1,
-									background: "transparent",
-									border: "none",
-									fontSize: "0.72rem",
-									fontFamily: "inherit",
-									outline: "none",
-								}}
+								className="flex-1 border rounded-lg text-xs p-1"
 							/>
 						) : (
 							<button
@@ -123,13 +89,10 @@ export default function Tasks({
 									setEditText(task.text);
 								}}
 								title="Double-click to edit"
+								className="w-full break-all truncate text-left pl-2 text-xs cursor-text"
 								style={{
-									flex: 1,
-									fontSize: "0.72rem",
-									lineHeight: 1.5,
 									textDecoration: task.completed ? "line-through" : "none",
-									cursor: "text",
-									wordBreak: "break-word",
+									color: task.completed ? "#6b7280" : "#111827",
 								}}
 							>
 								{task.text}
@@ -139,17 +102,10 @@ export default function Tasks({
 						<button
 							type="button"
 							onClick={() => onDelete(task.id)}
-							style={{
-								flexShrink: 0,
-								background: "none",
-								border: "none",
-								cursor: "pointer",
-								fontSize: "0.8rem",
-								padding: 0,
-								lineHeight: 1,
-							}}
+							className="cursor-pointer shadow rounded-lg border px-2 py-1
+					transition bg-primary text-white hover:inset-shadow-secondary/20 hover:inset-shadow-sm"
 						>
-							×
+							X
 						</button>
 					</div>
 				))}
