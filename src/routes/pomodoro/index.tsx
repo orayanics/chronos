@@ -14,15 +14,22 @@ import {
 	LABEL_MAP,
 	TYPES,
 } from "#/modules/pomodoro/constant";
+import type { PPomodoroInitialState } from "#/modules/pomodoro/schema";
 import { canShareSession } from "#/modules/pomodoro/share";
 import usePomodoro from "#/modules/pomodoro/usePomodoro";
 import { duration, expiry, saveState } from "#/modules/pomodoro/util";
+import { getPomodoroInitialState } from "#/server/pomodoro";
 
 export const Route = createFileRoute("/pomodoro/")({
+	loader: () => getPomodoroInitialState(),
 	component: RouteComponent,
 });
 
-export function PomodoroApp() {
+export function PomodoroApp({
+	initialState,
+}: {
+	initialState?: PPomodoroInitialState;
+}) {
 	const {
 		settings,
 		session,
@@ -43,7 +50,7 @@ export function PomodoroApp() {
 		pause,
 		restart,
 		switchMode,
-	} = usePomodoro();
+	} = usePomodoro(initialState);
 	const [showShare, setShowShare] = useState(false);
 	const { hours, minutes, seconds } = time;
 	const shareEnabled = canShareSession(session);
@@ -176,5 +183,7 @@ export function PomodoroApp() {
 }
 
 function RouteComponent() {
-	return <PomodoroApp />;
+	const initialState = Route.useLoaderData();
+
+	return <PomodoroApp initialState={initialState} />;
 }

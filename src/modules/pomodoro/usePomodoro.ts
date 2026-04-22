@@ -9,6 +9,7 @@ import {
 } from "#/modules/pomodoro/constant";
 import type {
 	POMODORO_TYPE,
+	PPomodoroInitialState,
 	PSessionLog,
 	PSessionState,
 	PSettings,
@@ -16,6 +17,7 @@ import type {
 import {
 	duration,
 	expiry,
+	getClockTimeFromMinutes,
 	isAutoStart,
 	loadState,
 	normalizeSessionState,
@@ -40,32 +42,63 @@ function getNextCycleCount(
 	return currentCycleCount;
 }
 
-export default function usePomodoro() {
+export default function usePomodoro(initialState?: PPomodoroInitialState) {
 	// const logSession = useServerFn(logPSession);
-	const [settings, setSettings] = useState<PSettings>(() =>
-		loadState("settings", DEFAULT_SETTINGS),
+	const initialStateRef = useRef<PPomodoroInitialState>(
+		initialState ?? {
+			settings: DEFAULT_SETTINGS,
+			session: createDefaultSession(),
+			mode: "WORK",
+		},
+	);
+	const [settings, setSettings] = useState<PSettings>(
+		initialStateRef.current.settings,
 	);
 	const [session, setSession] = useState<PSessionState>(() =>
 		normalizeSessionState(
-			loadState<Partial<PSessionState> | null>("session", null),
-			createDefaultSession().startedAt,
+			initialStateRef.current.session,
+			initialStateRef.current.session.startedAt,
 		),
 	);
-	const [mode, setMode] = useState<POMODORO_TYPE>(() =>
-		loadState<POMODORO_TYPE>("mode", "WORK"),
-	);
+	const [mode, setMode] = useState<POMODORO_TYPE>(initialStateRef.current.mode);
 	const [showSettings, setShowSettings] = useState(false);
+	const [hasMounted, setHasMounted] = useState(false);
+	const [isTimerReady, setIsTimerReady] = useState(false);
+
+	useEffect(() => {
+		const resolvedInitialState = initialStateRef.current;
+		const nextSettings = loadState("settings", resolvedInitialState.settings);
+		const nextSession = normalizeSessionState(
+			loadState<Partial<PSessionState> | null>(
+				"session",
+				resolvedInitialState.session,
+			),
+			resolvedInitialState.session.startedAt,
+		);
+		const nextMode = loadState<POMODORO_TYPE>(
+			"mode",
+			resolvedInitialState.mode,
+		);
+
+		setSettings(nextSettings);
+		setSession(nextSession);
+		setMode(nextMode);
+		setHasMounted(true);
+	}, []);
 
 	// Persist whenever state changes
 	useEffect(() => {
+		if (!hasMounted) return;
 		saveState("settings", settings);
-	}, [settings]);
+	}, [hasMounted, settings]);
 	useEffect(() => {
+		if (!hasMounted) return;
 		saveState("session", session);
-	}, [session]);
+	}, [hasMounted, session]);
 	useEffect(() => {
+		if (!hasMounted) return;
 		saveState("mode", mode);
-	}, [mode]);
+	}, [hasMounted, mode]);
 
 	// Refs to avoid stale closures inside onExpire
 	const modeRef = useRef(mode);
@@ -147,6 +180,18 @@ export default function usePomodoro() {
 	// Keep restartRef current after each render
 	restartRef.current = restart;
 
+	const restoredTimerRef = useRef(false);
+
+	useEffect(() => {
+		if (!hasMounted || restoredTimerRef.current) return;
+
+		restoredTimerRef.current = true;
+		restart(expiry(duration(mode, settings)), false);
+		setIsTimerReady(true);
+	}, [hasMounted, mode, restart, settings]);
+
+	const fallbackTime = getClockTimeFromMinutes(duration(mode, settings));
+
 	const handleRestart = () => {
 		const expiryT = expiry(duration(mode, settings));
 		restart(expiryT, false);
@@ -220,7 +265,7 @@ export default function usePomodoro() {
 		settings,
 		session,
 		showSettings,
-		time: { hours, minutes, seconds },
+		time: isTimerReady ? { hours, minutes, seconds } : fallbackTime,
 		isRunning,
 		switchMode,
 		handleRestart,

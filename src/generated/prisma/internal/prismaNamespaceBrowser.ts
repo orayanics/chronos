@@ -51,9 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  PSession: 'PSession',
-  PTask: 'PTask',
-  SLog: 'SLog'
+  SessionLog: 'SessionLog',
+  Task: 'Task',
+  Settings: 'Settings',
+  SessionState: 'SessionState'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -69,32 +70,49 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const PSessionScalarFieldEnum = {
-  id: 'id',
-  startTime: 'startTime',
-  endTime: 'endTime',
-  taskId: 'taskId'
-} as const
-
-export type PSessionScalarFieldEnum = (typeof PSessionScalarFieldEnum)[keyof typeof PSessionScalarFieldEnum]
-
-
-export const PTaskScalarFieldEnum = {
-  id: 'id',
-  title: 'title',
-  description: 'description'
-} as const
-
-export type PTaskScalarFieldEnum = (typeof PTaskScalarFieldEnum)[keyof typeof PTaskScalarFieldEnum]
-
-
-export const SLogScalarFieldEnum = {
+export const SessionLogScalarFieldEnum = {
   id: 'id',
   type: 'type',
-  duration: 'duration'
+  duration: 'duration',
+  completedAt: 'completedAt',
+  sessionStateId: 'sessionStateId'
 } as const
 
-export type SLogScalarFieldEnum = (typeof SLogScalarFieldEnum)[keyof typeof SLogScalarFieldEnum]
+export type SessionLogScalarFieldEnum = (typeof SessionLogScalarFieldEnum)[keyof typeof SessionLogScalarFieldEnum]
+
+
+export const TaskScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  completed: 'completed',
+  sessionStateId: 'sessionStateId'
+} as const
+
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const SettingsScalarFieldEnum = {
+  id: 'id',
+  workDuration: 'workDuration',
+  shortBreakDuration: 'shortBreakDuration',
+  longBreakDuration: 'longBreakDuration',
+  autoStartBreaks: 'autoStartBreaks',
+  autoStartPomodoros: 'autoStartPomodoros'
+} as const
+
+export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum]
+
+
+export const SessionStateScalarFieldEnum = {
+  id: 'id',
+  startedAt: 'startedAt',
+  pomodorosCompleted: 'pomodorosCompleted',
+  shortBreaksCompleted: 'shortBreaksCompleted',
+  longBreaksCompleted: 'longBreaksCompleted',
+  currentCycleCount: 'currentCycleCount'
+} as const
+
+export type SessionStateScalarFieldEnum = (typeof SessionStateScalarFieldEnum)[keyof typeof SessionStateScalarFieldEnum]
 
 
 export const SortOrder = {

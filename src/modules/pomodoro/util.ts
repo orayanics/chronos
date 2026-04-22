@@ -24,6 +24,16 @@ export function pad(n: number) {
 	return String(n).padStart(2, "0");
 }
 
+export function getClockTimeFromMinutes(totalMinutes: number) {
+	const totalSeconds = Math.max(0, Math.floor(totalMinutes * 60));
+
+	return {
+		hours: Math.floor(totalSeconds / 3600),
+		minutes: Math.floor((totalSeconds % 3600) / 60),
+		seconds: totalSeconds % 60,
+	};
+}
+
 export function formatTime(logs: PSessionLog[]): string {
 	const totalMinutes = getTotalFocusMinutes(logs);
 	const totalRounded = Math.round(totalMinutes * 100) / 100;
@@ -78,7 +88,9 @@ export function normalizeSessionState(
 		)
 		.reduce<number | null>(
 			(earliest, log) =>
-				earliest === null ? log.completedAt : Math.min(earliest, log.completedAt),
+				earliest === null
+					? log.completedAt
+					: Math.min(earliest, log.completedAt),
 			null,
 		);
 
@@ -87,7 +99,7 @@ export function normalizeSessionState(
 			typeof session?.startedAt === "number" &&
 			Number.isFinite(session.startedAt)
 				? session.startedAt
-				: firstWorkCompletedAt ?? fallbackStartedAt,
+				: (firstWorkCompletedAt ?? fallbackStartedAt),
 		pomodorosCompleted:
 			typeof session?.pomodorosCompleted === "number"
 				? session.pomodorosCompleted

@@ -1,12 +1,24 @@
 import { createServerFn } from "@tanstack/react-start";
+import { prisma } from "#/db";
+
+import {
+	createDefaultSession,
+	DEFAULT_SETTINGS,
+} from "#/modules/pomodoro/constant";
+import type { PPomodoroInitialState } from "#/modules/pomodoro/schema";
 
 // Log Pomodoro Session into DB
 export const logPSession = createServerFn({ method: "POST" }).handler(
-	async () => {
-		console.log("Logging Pomodoro Session...");
-		// Here you would implement the logic to log the session into your database.
-		// This could involve inserting a new record with the session details, such as start time, end time, tasks completed, etc.
-		// For demonstration purposes, we'll just return a success message.
-		return { success: true, message: "Pomodoro session logged successfully!" };
-	},
+	async () => {},
+);
+
+export const getPomodoroInitialState = createServerFn({
+	method: "GET",
+}).handler(
+	async () =>
+		({
+			settings: DEFAULT_SETTINGS,
+			session: createDefaultSession(),
+			mode: "WORK",
+		}) satisfies PPomodoroInitialState,
 );

@@ -18,17 +18,22 @@ export { Prisma }
 export * as $Enums from './enums.ts'
 export * from './enums.ts';
 /**
- * Model PSession
+ * Model SessionLog
  * 
  */
-export type PSession = Prisma.PSessionModel
+export type SessionLog = Prisma.SessionLogModel
 /**
- * Model PTask
+ * Model Task
  * 
  */
-export type PTask = Prisma.PTaskModel
+export type Task = Prisma.TaskModel
 /**
- * Model SLog
+ * Model Settings
  * 
  */
-export type SLog = Prisma.SLogModel
+export type Settings = Prisma.SettingsModel
+/**
+ * Model SessionState
+ * 
+ */
+export type SessionState = Prisma.SessionStateModel

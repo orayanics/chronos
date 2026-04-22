@@ -10,29 +10,49 @@ datasource db {
 // Database Schema for a Pomodoro Timer Application
 // Contains pomodoro sessions and tasks
 
-model PSession {
-  id        Int      @id @default(autoincrement())
-  startTime DateTime
-  endTime   DateTime
-  taskId    Int
-  task      PTask     @relation(fields: [taskId], references: [id])
-}
-
-model PTask {
-  id          Int        @id @default(autoincrement())
-  title       String
-  description String?
-  sessions    PSession[]
-}
-
-enum LogType {
+enum POMODORO_TYPE {
   WORK
   SHORT
   LONG
 }
 
-model SLog {
-  id Int @id @default(autoincrement())
-  type LogType
-  duration Int // Duration in seconds
+model SessionLog {
+  id        Int      @id @default(autoincrement())
+  type     POMODORO_TYPE
+  duration Int
+  completedAt DateTime @default(now())
+
+  SessionState SessionState? @relation(fields: [sessionStateId], references: [id])
+  sessionStateId Int?
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String
+  completed   Boolean  @default(false)
+
+  SessionState SessionState? @relation(fields: [sessionStateId], references: [id])
+  sessionStateId Int?
+}
+
+model Settings {
+  id                Int      @id @default(autoincrement())
+  workDuration       Int      @default(25) // in minutes
+  shortBreakDuration Int      @default(5)  // in minutes
+  longBreakDuration  Int      @default(15) // in minutes
+  autoStartBreaks     Boolean  @default(false)
+  autoStartPomodoros  Boolean  @default(false)
+}
+
+// Session per pomodoro, to track the current session/pomodoro
+// Useful for checking each pomodoro session state, and for resuming sessions after a break or interruption
+model SessionState {
+  id        Int      @id @default(autoincrement())
+  startedAt Int     @default(0) // timestamp in milliseconds
+  pomodorosCompleted Int     @default(0)
+  shortBreaksCompleted Int     @default(0)
+  longBreaksCompleted Int     @default(0)
+  currentCycleCount Int     @default(0) // counts the number of completed cycles (work + break)
+  logs      SessionLog[] // relation to SessionLog for tracking each session's details
+  tasks    Task[] // relation to Task for tracking tasks associated with the session
 }

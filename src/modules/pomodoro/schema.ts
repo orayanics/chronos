@@ -31,3 +31,9 @@ export interface PSessionState {
 	logs: PSessionLog[];
 	tasks: PTask[];
 }
+
+export interface PPomodoroInitialState {
+	settings: PSettings;
+	session: PSessionState;
+	mode: POMODORO_TYPE;
+}

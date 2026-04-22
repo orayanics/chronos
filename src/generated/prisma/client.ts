@@ -31,8 +31,8 @@ export * from "./enums.ts"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more PSessions
- * const pSessions = await prisma.pSession.findMany()
+ * // Fetch zero or more SessionLogs
+ * const sessionLogs = await prisma.sessionLog.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -42,17 +42,22 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model PSession
+ * Model SessionLog
  * 
  */
-export type PSession = Prisma.PSessionModel
+export type SessionLog = Prisma.SessionLogModel
 /**
- * Model PTask
+ * Model Task
  * 
  */
-export type PTask = Prisma.PTaskModel
+export type Task = Prisma.TaskModel
 /**
- * Model SLog
+ * Model Settings
  * 
  */
-export type SLog = Prisma.SLogModel
+export type Settings = Prisma.SettingsModel
+/**
+ * Model SessionState
+ * 
+ */
+export type SessionState = Prisma.SessionStateModel

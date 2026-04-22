@@ -9,10 +9,10 @@
 * 🟢 You can import this file directly.
 */
 
-export const LogType = {
-  Pomodoro: 'Pomodoro',
-  Short: 'Short',
-  Long: 'Long'
+export const POMODORO_TYPE = {
+  WORK: 'WORK',
+  SHORT: 'SHORT',
+  LONG: 'LONG'
 } as const
 
-export type LogType = (typeof LogType)[keyof typeof LogType]
+export type POMODORO_TYPE = (typeof POMODORO_TYPE)[keyof typeof POMODORO_TYPE]
