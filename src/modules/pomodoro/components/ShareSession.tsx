@@ -19,7 +19,7 @@ export default function ShareSession({
 	const [error, setError] = useState("");
 	const shareData = getShareSessionData(session);
 
-	if (!isOpen || !shareData) return null;
+	if (!shareData) return null;
 
 	const handleDownload = async () => {
 		if (!cardRef.current) return;
@@ -41,10 +41,19 @@ export default function ShareSession({
 
 	return (
 		<>
-			<div className="fixed inset-0 z-30 bg-black/30 backdrop-blur-xs mb-0" />
-
-			<div className="fixed inset-0 z-30 flex items-center justify-center mb-0">
-				<div className="w-full max-w-md rounded-lg bg-secondary p-10 space-y-4">
+			{isOpen && (
+				<button
+					type="button"
+					className="fixed inset-0 z-20 bg-black/30 backdrop-blur-xs mb-0"
+					onClick={onClose}
+				/>
+			)}
+			<div
+				className={`w-100 absolute inset-0 left-0 right-0 top-0 mx-auto my-auto
+			z-30 flex items-center justify-center mb-0 transition-opacity duration-300 ease-in-out
+			${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+			>
+				<div className="max-w-md rounded-lg bg-secondary p-10 space-y-4">
 					<div className="text-center">
 						<p className="text-xs uppercase tracking-[0.3em] text-primary/50">
 							Share Session

@@ -62,7 +62,12 @@ export function PomodoroApp() {
 			</div>
 
 			<div className="flex flex-col justify-center items-center gap-2">
-				<Timer hours={hours} minutes={minutes} seconds={seconds} mode={mode} />
+				<Timer
+					hours={hours ?? 0}
+					minutes={minutes ?? 0}
+					seconds={seconds ?? 0}
+					mode={mode}
+				/>
 
 				<div className="flex gap-2">
 					<button
