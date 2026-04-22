@@ -40,7 +40,7 @@ function PomodoroApp() {
 	} = usePomodoro();
 	const { hours, minutes, seconds } = time;
 	return (
-		<div className="max-w-md md:max-w-4xl w-full min-h-screen mx-auto p-4">
+		<div className="max-w-md md:max-w-4xl w-full min-h-screen mx-auto p-4 bg-white">
 			<div className="flex justify-between items-center">
 				<p className="text-lg font-bold">POMODORO</p>
 
@@ -117,22 +117,22 @@ function PomodoroApp() {
 				<Logs logs={session.logs} />
 			</div>
 
-			{showSettings && (
-				<Settings
-					settings={settings}
-					onChange={(s) => {
-						setSettings(s);
-						// TODO: Decide final behavior for UX
-						// Reset timer when settings change
-						const expiryT = expiry(duration(mode, s));
-						restart(expiryT, false);
-					}}
-					onClearSession={() => {
-						setSession(DEFAULT_SESSION);
-						saveState("session", DEFAULT_SESSION);
-					}}
-				/>
-			)}
+			<Settings
+				isOpen={showSettings}
+				onClose={() => setShowSettings(false)}
+				settings={settings}
+				onChange={(s) => {
+					setSettings(s);
+					// TODO: Decide final behavior for UX
+					// Reset timer when settings change
+					const expiryT = expiry(duration(mode, s));
+					restart(expiryT, false);
+				}}
+				onClearSession={() => {
+					setSession(DEFAULT_SESSION);
+					saveState("session", DEFAULT_SESSION);
+				}}
+			/>
 		</div>
 	);
 }
