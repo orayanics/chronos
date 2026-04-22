@@ -11,6 +11,8 @@ declare global {
 
 export const prisma = globalThis.__prisma || new PrismaClient({ adapter });
 
+export type DbClient = typeof prisma;
+
 if (process.env.NODE_ENV !== "production") {
 	globalThis.__prisma = prisma;
 }

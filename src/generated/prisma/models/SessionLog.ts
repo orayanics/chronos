@@ -192,7 +192,7 @@ export type SessionLogGroupByOutputType = {
   type: $Enums.POMODORO_TYPE
   duration: number
   completedAt: Date
-  sessionStateId: number | null
+  sessionStateId: number
   _count: SessionLogCountAggregateOutputType | null
   _avg: SessionLogAvgAggregateOutputType | null
   _sum: SessionLogSumAggregateOutputType | null
@@ -223,8 +223,8 @@ export type SessionLogWhereInput = {
   type?: Prisma.EnumPOMODORO_TYPEFilter<"SessionLog"> | $Enums.POMODORO_TYPE
   duration?: Prisma.IntFilter<"SessionLog"> | number
   completedAt?: Prisma.DateTimeFilter<"SessionLog"> | Date | string
-  sessionStateId?: Prisma.IntNullableFilter<"SessionLog"> | number | null
-  SessionState?: Prisma.XOR<Prisma.SessionStateNullableScalarRelationFilter, Prisma.SessionStateWhereInput> | null
+  sessionStateId?: Prisma.IntFilter<"SessionLog"> | number
+  sessionState?: Prisma.XOR<Prisma.SessionStateScalarRelationFilter, Prisma.SessionStateWhereInput>
 }
 
 export type SessionLogOrderByWithRelationInput = {
@@ -232,8 +232,8 @@ export type SessionLogOrderByWithRelationInput = {
   type?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
-  sessionStateId?: Prisma.SortOrderInput | Prisma.SortOrder
-  SessionState?: Prisma.SessionStateOrderByWithRelationInput
+  sessionStateId?: Prisma.SortOrder
+  sessionState?: Prisma.SessionStateOrderByWithRelationInput
 }
 
 export type SessionLogWhereUniqueInput = Prisma.AtLeast<{
@@ -244,8 +244,8 @@ export type SessionLogWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumPOMODORO_TYPEFilter<"SessionLog"> | $Enums.POMODORO_TYPE
   duration?: Prisma.IntFilter<"SessionLog"> | number
   completedAt?: Prisma.DateTimeFilter<"SessionLog"> | Date | string
-  sessionStateId?: Prisma.IntNullableFilter<"SessionLog"> | number | null
-  SessionState?: Prisma.XOR<Prisma.SessionStateNullableScalarRelationFilter, Prisma.SessionStateWhereInput> | null
+  sessionStateId?: Prisma.IntFilter<"SessionLog"> | number
+  sessionState?: Prisma.XOR<Prisma.SessionStateScalarRelationFilter, Prisma.SessionStateWhereInput>
 }, "id">
 
 export type SessionLogOrderByWithAggregationInput = {
@@ -253,7 +253,7 @@ export type SessionLogOrderByWithAggregationInput = {
   type?: Prisma.SortOrder
   duration?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
-  sessionStateId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sessionStateId?: Prisma.SortOrder
   _count?: Prisma.SessionLogCountOrderByAggregateInput
   _avg?: Prisma.SessionLogAvgOrderByAggregateInput
   _max?: Prisma.SessionLogMaxOrderByAggregateInput
@@ -269,14 +269,14 @@ export type SessionLogScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumPOMODORO_TYPEWithAggregatesFilter<"SessionLog"> | $Enums.POMODORO_TYPE
   duration?: Prisma.IntWithAggregatesFilter<"SessionLog"> | number
   completedAt?: Prisma.DateTimeWithAggregatesFilter<"SessionLog"> | Date | string
-  sessionStateId?: Prisma.IntNullableWithAggregatesFilter<"SessionLog"> | number | null
+  sessionStateId?: Prisma.IntWithAggregatesFilter<"SessionLog"> | number
 }
 
 export type SessionLogCreateInput = {
   type: $Enums.POMODORO_TYPE
   duration: number
   completedAt?: Date | string
-  SessionState?: Prisma.SessionStateCreateNestedOneWithoutLogsInput
+  sessionState: Prisma.SessionStateCreateNestedOneWithoutLogsInput
 }
 
 export type SessionLogUncheckedCreateInput = {
@@ -284,14 +284,14 @@ export type SessionLogUncheckedCreateInput = {
   type: $Enums.POMODORO_TYPE
   duration: number
   completedAt?: Date | string
-  sessionStateId?: number | null
+  sessionStateId: number
 }
 
 export type SessionLogUpdateInput = {
   type?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   completedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  SessionState?: Prisma.SessionStateUpdateOneWithoutLogsNestedInput
+  sessionState?: Prisma.SessionStateUpdateOneRequiredWithoutLogsNestedInput
 }
 
 export type SessionLogUncheckedUpdateInput = {
@@ -299,7 +299,7 @@ export type SessionLogUncheckedUpdateInput = {
   type?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   completedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessionStateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sessionStateId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type SessionLogCreateManyInput = {
@@ -307,7 +307,7 @@ export type SessionLogCreateManyInput = {
   type: $Enums.POMODORO_TYPE
   duration: number
   completedAt?: Date | string
-  sessionStateId?: number | null
+  sessionStateId: number
 }
 
 export type SessionLogUpdateManyMutationInput = {
@@ -321,7 +321,7 @@ export type SessionLogUncheckedUpdateManyInput = {
   type?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   duration?: Prisma.IntFieldUpdateOperationsInput | number
   completedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  sessionStateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sessionStateId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type SessionLogCountOrderByAggregateInput = {
@@ -384,14 +384,6 @@ export type IntFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
 }
 
 export type SessionLogCreateNestedManyWithoutSessionStateInput = {
@@ -482,7 +474,7 @@ export type SessionLogScalarWhereInput = {
   type?: Prisma.EnumPOMODORO_TYPEFilter<"SessionLog"> | $Enums.POMODORO_TYPE
   duration?: Prisma.IntFilter<"SessionLog"> | number
   completedAt?: Prisma.DateTimeFilter<"SessionLog"> | Date | string
-  sessionStateId?: Prisma.IntNullableFilter<"SessionLog"> | number | null
+  sessionStateId?: Prisma.IntFilter<"SessionLog"> | number
 }
 
 export type SessionLogCreateManySessionStateInput = {
@@ -520,7 +512,7 @@ export type SessionLogSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   duration?: boolean
   completedAt?: boolean
   sessionStateId?: boolean
-  SessionState?: boolean | Prisma.SessionLog$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionLog"]>
 
 export type SessionLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -529,7 +521,7 @@ export type SessionLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   duration?: boolean
   completedAt?: boolean
   sessionStateId?: boolean
-  SessionState?: boolean | Prisma.SessionLog$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionLog"]>
 
 export type SessionLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -538,7 +530,7 @@ export type SessionLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   duration?: boolean
   completedAt?: boolean
   sessionStateId?: boolean
-  SessionState?: boolean | Prisma.SessionLog$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionLog"]>
 
 export type SessionLogSelectScalar = {
@@ -551,26 +543,26 @@ export type SessionLogSelectScalar = {
 
 export type SessionLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "type" | "duration" | "completedAt" | "sessionStateId", ExtArgs["result"]["sessionLog"]>
 export type SessionLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  SessionState?: boolean | Prisma.SessionLog$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }
 export type SessionLogIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  SessionState?: boolean | Prisma.SessionLog$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }
 export type SessionLogIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  SessionState?: boolean | Prisma.SessionLog$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }
 
 export type $SessionLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SessionLog"
   objects: {
-    SessionState: Prisma.$SessionStatePayload<ExtArgs> | null
+    sessionState: Prisma.$SessionStatePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     type: $Enums.POMODORO_TYPE
     duration: number
     completedAt: Date
-    sessionStateId: number | null
+    sessionStateId: number
   }, ExtArgs["result"]["sessionLog"]>
   composites: {}
 }
@@ -965,7 +957,7 @@ readonly fields: SessionLogFieldRefs;
  */
 export interface Prisma__SessionLogClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  SessionState<T extends Prisma.SessionLog$SessionStateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SessionLog$SessionStateArgs<ExtArgs>>): Prisma.Prisma__SessionStateClient<runtime.Types.Result.GetResult<Prisma.$SessionStatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  sessionState<T extends Prisma.SessionStateDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SessionStateDefaultArgs<ExtArgs>>): Prisma.Prisma__SessionStateClient<runtime.Types.Result.GetResult<Prisma.$SessionStatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1396,25 +1388,6 @@ export type SessionLogDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many SessionLogs to delete.
    */
   limit?: number
-}
-
-/**
- * SessionLog.SessionState
- */
-export type SessionLog$SessionStateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the SessionState
-   */
-  select?: Prisma.SessionStateSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the SessionState
-   */
-  omit?: Prisma.SessionStateOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SessionStateInclude<ExtArgs> | null
-  where?: Prisma.SessionStateWhereInput
 }
 
 /**

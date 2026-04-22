@@ -29,13 +29,13 @@ function makeSession(
 		currentCycleCount: 2,
 		logs: [
 			{
-				id: "work-1",
+				id: 1,
 				type: "WORK",
 				duration: 25,
 				completedAt: Date.UTC(2026, 3, 20, 8, 25, 0),
 			},
 			{
-				id: "work-2",
+				id: 2,
 				type: "WORK",
 				duration: 25,
 				completedAt: Date.UTC(2026, 3, 20, 9, 0, 0),

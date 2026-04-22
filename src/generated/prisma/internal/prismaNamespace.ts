@@ -752,7 +752,7 @@ export type SessionLogScalarFieldEnum = (typeof SessionLogScalarFieldEnum)[keyof
 
 export const TaskScalarFieldEnum = {
   id: 'id',
-  title: 'title',
+  text: 'text',
   completed: 'completed',
   sessionStateId: 'sessionStateId'
 } as const
@@ -762,9 +762,10 @@ export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof Task
 
 export const SettingsScalarFieldEnum = {
   id: 'id',
-  workDuration: 'workDuration',
-  shortBreakDuration: 'shortBreakDuration',
-  longBreakDuration: 'longBreakDuration',
+  workMinutes: 'workMinutes',
+  shortBreakMinutes: 'shortBreakMinutes',
+  longBreakMinutes: 'longBreakMinutes',
+  cyclesBeforeLongBreak: 'cyclesBeforeLongBreak',
   autoStartBreaks: 'autoStartBreaks',
   autoStartPomodoros: 'autoStartPomodoros'
 } as const
@@ -775,6 +776,7 @@ export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typ
 export const SessionStateScalarFieldEnum = {
   id: 'id',
   startedAt: 'startedAt',
+  currentMode: 'currentMode',
   pomodorosCompleted: 'pomodorosCompleted',
   shortBreaksCompleted: 'shortBreaksCompleted',
   longBreaksCompleted: 'longBreaksCompleted',
@@ -790,14 +792,6 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 

@@ -2,8 +2,8 @@ import type { PSettings } from "../schema";
 
 interface SettingsProps {
 	settings: PSettings;
-	onChange: (settings: PSettings) => void;
-	onClearSession: () => void;
+	onChange: (settings: PSettings) => void | Promise<void>;
+	onClearSession: () => void | Promise<void>;
 	isOpen: boolean;
 	onClose: () => void;
 }
@@ -23,7 +23,7 @@ const Field = ({
 		| "cyclesBeforeLongBreak"
 	>;
 	settings: PSettings;
-	onChange: (settings: PSettings) => void;
+	onChange: (settings: PSettings) => void | Promise<void>;
 }) => {
 	return (
 		<div className="flex flex-col gap-1">
@@ -33,12 +33,16 @@ const Field = ({
 			<input
 				className="shadow border border-primary/20 p-2 rounded-lg"
 				type="number"
-				min={0}
+				min={1}
 				value={settings[settingKey]}
-				onChange={(e) =>
-					// onChange({ ...settings, [settingKey]: Math.max(1, +e.target.value) })
-					onChange({ ...settings, [settingKey]: e.target.value })
-				}
+				onChange={(e) => {
+					const value = Number(e.target.value);
+					if (!Number.isFinite(value)) return;
+					void onChange({
+						...settings,
+						[settingKey]: Math.max(1, Math.trunc(value)),
+					});
+				}}
 			/>
 		</div>
 	);
@@ -53,7 +57,7 @@ const Toggle = ({
 	label: string;
 	settingKey: keyof PSettings;
 	settings: PSettings;
-	onChange: (settings: PSettings) => void;
+	onChange: (settings: PSettings) => void | Promise<void>;
 }) => {
 	const isToggled = settings[settingKey];
 
@@ -67,9 +71,12 @@ const Toggle = ({
 				className={`cursor-pointer shadow rounded-lg border p-2
 					transition
 					${isToggled ? "bg-primary text-white hover:inset-shadow-secondary/20 hover:inset-shadow-sm " : "border-primary/20 hover:inset-shadow-primary/20 hover:inset-shadow-sm "}`}
-				onClick={() =>
-					onChange({ ...settings, [settingKey]: !settings[settingKey] })
-				}
+				onClick={() => {
+					void onChange({
+						...settings,
+						[settingKey]: !settings[settingKey],
+					});
+				}}
 			>
 				{settings[settingKey] ? "ON" : "OFF"}
 			</button>
@@ -141,7 +148,9 @@ export default function Settings({
 
 				<button
 					type="button"
-					onClick={onClearSession}
+					onClick={() => {
+						void onClearSession();
+					}}
 					className="w-full py-2 bg-rose-400 text-white rounded-lg
 					shadow-sm shadow-rose-900
 					hover:inset-shadow-sm hover:inset-shadow-rose-900/60

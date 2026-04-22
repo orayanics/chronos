@@ -7,9 +7,6 @@ datasource db {
   provider = "sqlite"
 }
 
-// Database Schema for a Pomodoro Timer Application
-// Contains pomodoro sessions and tasks
-
 enum POMODORO_TYPE {
   WORK
   SHORT
@@ -17,42 +14,40 @@ enum POMODORO_TYPE {
 }
 
 model SessionLog {
-  id        Int      @id @default(autoincrement())
-  type     POMODORO_TYPE
-  duration Int
-  completedAt DateTime @default(now())
-
-  SessionState SessionState? @relation(fields: [sessionStateId], references: [id])
-  sessionStateId Int?
+  id             Int           @id @default(autoincrement())
+  type           POMODORO_TYPE
+  duration       Int
+  completedAt    DateTime      @default(now())
+  sessionStateId Int
+  sessionState   SessionState  @relation(fields: [sessionStateId], references: [id], onDelete: Cascade)
 }
 
 model Task {
-  id          Int      @id @default(autoincrement())
-  title       String
-  completed   Boolean  @default(false)
-
-  SessionState SessionState? @relation(fields: [sessionStateId], references: [id])
-  sessionStateId Int?
+  id             Int           @id @default(autoincrement())
+  text           String
+  completed      Boolean       @default(false)
+  sessionStateId Int
+  sessionState   SessionState  @relation(fields: [sessionStateId], references: [id], onDelete: Cascade)
 }
 
 model Settings {
-  id                Int      @id @default(autoincrement())
-  workDuration       Int      @default(25) // in minutes
-  shortBreakDuration Int      @default(5)  // in minutes
-  longBreakDuration  Int      @default(15) // in minutes
-  autoStartBreaks     Boolean  @default(false)
-  autoStartPomodoros  Boolean  @default(false)
+  id                    Int      @id
+  workMinutes           Int      @default(25)
+  shortBreakMinutes     Int      @default(5)
+  longBreakMinutes      Int      @default(15)
+  cyclesBeforeLongBreak Int      @default(4)
+  autoStartBreaks       Boolean  @default(false)
+  autoStartPomodoros    Boolean  @default(false)
 }
 
-// Session per pomodoro, to track the current session/pomodoro
-// Useful for checking each pomodoro session state, and for resuming sessions after a break or interruption
 model SessionState {
-  id        Int      @id @default(autoincrement())
-  startedAt Int     @default(0) // timestamp in milliseconds
-  pomodorosCompleted Int     @default(0)
-  shortBreaksCompleted Int     @default(0)
-  longBreaksCompleted Int     @default(0)
-  currentCycleCount Int     @default(0) // counts the number of completed cycles (work + break)
-  logs      SessionLog[] // relation to SessionLog for tracking each session's details
-  tasks    Task[] // relation to Task for tracking tasks associated with the session
+  id                   Int            @id
+  startedAt            Int            @default(0)
+  currentMode          POMODORO_TYPE  @default(WORK)
+  pomodorosCompleted   Int            @default(0)
+  shortBreaksCompleted Int            @default(0)
+  longBreaksCompleted  Int            @default(0)
+  currentCycleCount    Int            @default(0)
+  logs                 SessionLog[]
+  tasks                Task[]
 }

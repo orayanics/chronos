@@ -38,21 +38,21 @@ export type TaskSumAggregateOutputType = {
 
 export type TaskMinAggregateOutputType = {
   id: number | null
-  title: string | null
+  text: string | null
   completed: boolean | null
   sessionStateId: number | null
 }
 
 export type TaskMaxAggregateOutputType = {
   id: number | null
-  title: string | null
+  text: string | null
   completed: boolean | null
   sessionStateId: number | null
 }
 
 export type TaskCountAggregateOutputType = {
   id: number
-  title: number
+  text: number
   completed: number
   sessionStateId: number
   _all: number
@@ -71,21 +71,21 @@ export type TaskSumAggregateInputType = {
 
 export type TaskMinAggregateInputType = {
   id?: true
-  title?: true
+  text?: true
   completed?: true
   sessionStateId?: true
 }
 
 export type TaskMaxAggregateInputType = {
   id?: true
-  title?: true
+  text?: true
   completed?: true
   sessionStateId?: true
 }
 
 export type TaskCountAggregateInputType = {
   id?: true
-  title?: true
+  text?: true
   completed?: true
   sessionStateId?: true
   _all?: true
@@ -179,9 +179,9 @@ export type TaskGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type TaskGroupByOutputType = {
   id: number
-  title: string
+  text: string
   completed: boolean
-  sessionStateId: number | null
+  sessionStateId: number
   _count: TaskCountAggregateOutputType | null
   _avg: TaskAvgAggregateOutputType | null
   _sum: TaskSumAggregateOutputType | null
@@ -209,18 +209,18 @@ export type TaskWhereInput = {
   OR?: Prisma.TaskWhereInput[]
   NOT?: Prisma.TaskWhereInput | Prisma.TaskWhereInput[]
   id?: Prisma.IntFilter<"Task"> | number
-  title?: Prisma.StringFilter<"Task"> | string
+  text?: Prisma.StringFilter<"Task"> | string
   completed?: Prisma.BoolFilter<"Task"> | boolean
-  sessionStateId?: Prisma.IntNullableFilter<"Task"> | number | null
-  SessionState?: Prisma.XOR<Prisma.SessionStateNullableScalarRelationFilter, Prisma.SessionStateWhereInput> | null
+  sessionStateId?: Prisma.IntFilter<"Task"> | number
+  sessionState?: Prisma.XOR<Prisma.SessionStateScalarRelationFilter, Prisma.SessionStateWhereInput>
 }
 
 export type TaskOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
+  text?: Prisma.SortOrder
   completed?: Prisma.SortOrder
-  sessionStateId?: Prisma.SortOrderInput | Prisma.SortOrder
-  SessionState?: Prisma.SessionStateOrderByWithRelationInput
+  sessionStateId?: Prisma.SortOrder
+  sessionState?: Prisma.SessionStateOrderByWithRelationInput
 }
 
 export type TaskWhereUniqueInput = Prisma.AtLeast<{
@@ -228,17 +228,17 @@ export type TaskWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.TaskWhereInput | Prisma.TaskWhereInput[]
   OR?: Prisma.TaskWhereInput[]
   NOT?: Prisma.TaskWhereInput | Prisma.TaskWhereInput[]
-  title?: Prisma.StringFilter<"Task"> | string
+  text?: Prisma.StringFilter<"Task"> | string
   completed?: Prisma.BoolFilter<"Task"> | boolean
-  sessionStateId?: Prisma.IntNullableFilter<"Task"> | number | null
-  SessionState?: Prisma.XOR<Prisma.SessionStateNullableScalarRelationFilter, Prisma.SessionStateWhereInput> | null
+  sessionStateId?: Prisma.IntFilter<"Task"> | number
+  sessionState?: Prisma.XOR<Prisma.SessionStateScalarRelationFilter, Prisma.SessionStateWhereInput>
 }, "id">
 
 export type TaskOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
+  text?: Prisma.SortOrder
   completed?: Prisma.SortOrder
-  sessionStateId?: Prisma.SortOrderInput | Prisma.SortOrder
+  sessionStateId?: Prisma.SortOrder
   _count?: Prisma.TaskCountOrderByAggregateInput
   _avg?: Prisma.TaskAvgOrderByAggregateInput
   _max?: Prisma.TaskMaxOrderByAggregateInput
@@ -251,59 +251,59 @@ export type TaskScalarWhereWithAggregatesInput = {
   OR?: Prisma.TaskScalarWhereWithAggregatesInput[]
   NOT?: Prisma.TaskScalarWhereWithAggregatesInput | Prisma.TaskScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Task"> | number
-  title?: Prisma.StringWithAggregatesFilter<"Task"> | string
+  text?: Prisma.StringWithAggregatesFilter<"Task"> | string
   completed?: Prisma.BoolWithAggregatesFilter<"Task"> | boolean
-  sessionStateId?: Prisma.IntNullableWithAggregatesFilter<"Task"> | number | null
+  sessionStateId?: Prisma.IntWithAggregatesFilter<"Task"> | number
 }
 
 export type TaskCreateInput = {
-  title: string
+  text: string
   completed?: boolean
-  SessionState?: Prisma.SessionStateCreateNestedOneWithoutTasksInput
+  sessionState: Prisma.SessionStateCreateNestedOneWithoutTasksInput
 }
 
 export type TaskUncheckedCreateInput = {
   id?: number
-  title: string
+  text: string
   completed?: boolean
-  sessionStateId?: number | null
+  sessionStateId: number
 }
 
 export type TaskUpdateInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  SessionState?: Prisma.SessionStateUpdateOneWithoutTasksNestedInput
+  sessionState?: Prisma.SessionStateUpdateOneRequiredWithoutTasksNestedInput
 }
 
 export type TaskUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  sessionStateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sessionStateId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TaskCreateManyInput = {
   id?: number
-  title: string
+  text: string
   completed?: boolean
-  sessionStateId?: number | null
+  sessionStateId: number
 }
 
 export type TaskUpdateManyMutationInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TaskUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  sessionStateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sessionStateId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TaskCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
+  text?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   sessionStateId?: Prisma.SortOrder
 }
@@ -315,14 +315,14 @@ export type TaskAvgOrderByAggregateInput = {
 
 export type TaskMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
+  text?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   sessionStateId?: Prisma.SortOrder
 }
 
 export type TaskMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  title?: Prisma.SortOrder
+  text?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   sessionStateId?: Prisma.SortOrder
 }
@@ -393,13 +393,13 @@ export type TaskUncheckedUpdateManyWithoutSessionStateNestedInput = {
 }
 
 export type TaskCreateWithoutSessionStateInput = {
-  title: string
+  text: string
   completed?: boolean
 }
 
 export type TaskUncheckedCreateWithoutSessionStateInput = {
   id?: number
-  title: string
+  text: string
   completed?: boolean
 }
 
@@ -433,31 +433,31 @@ export type TaskScalarWhereInput = {
   OR?: Prisma.TaskScalarWhereInput[]
   NOT?: Prisma.TaskScalarWhereInput | Prisma.TaskScalarWhereInput[]
   id?: Prisma.IntFilter<"Task"> | number
-  title?: Prisma.StringFilter<"Task"> | string
+  text?: Prisma.StringFilter<"Task"> | string
   completed?: Prisma.BoolFilter<"Task"> | boolean
-  sessionStateId?: Prisma.IntNullableFilter<"Task"> | number | null
+  sessionStateId?: Prisma.IntFilter<"Task"> | number
 }
 
 export type TaskCreateManySessionStateInput = {
   id?: number
-  title: string
+  text: string
   completed?: boolean
 }
 
 export type TaskUpdateWithoutSessionStateInput = {
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TaskUncheckedUpdateWithoutSessionStateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TaskUncheckedUpdateManyWithoutSessionStateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  title?: Prisma.StringFieldUpdateOperationsInput | string
+  text?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
@@ -465,56 +465,56 @@ export type TaskUncheckedUpdateManyWithoutSessionStateInput = {
 
 export type TaskSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  title?: boolean
+  text?: boolean
   completed?: boolean
   sessionStateId?: boolean
-  SessionState?: boolean | Prisma.Task$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
 
 export type TaskSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  title?: boolean
+  text?: boolean
   completed?: boolean
   sessionStateId?: boolean
-  SessionState?: boolean | Prisma.Task$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
 
 export type TaskSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  title?: boolean
+  text?: boolean
   completed?: boolean
   sessionStateId?: boolean
-  SessionState?: boolean | Prisma.Task$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["task"]>
 
 export type TaskSelectScalar = {
   id?: boolean
-  title?: boolean
+  text?: boolean
   completed?: boolean
   sessionStateId?: boolean
 }
 
-export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "completed" | "sessionStateId", ExtArgs["result"]["task"]>
+export type TaskOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "text" | "completed" | "sessionStateId", ExtArgs["result"]["task"]>
 export type TaskInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  SessionState?: boolean | Prisma.Task$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }
 export type TaskIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  SessionState?: boolean | Prisma.Task$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }
 export type TaskIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  SessionState?: boolean | Prisma.Task$SessionStateArgs<ExtArgs>
+  sessionState?: boolean | Prisma.SessionStateDefaultArgs<ExtArgs>
 }
 
 export type $TaskPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Task"
   objects: {
-    SessionState: Prisma.$SessionStatePayload<ExtArgs> | null
+    sessionState: Prisma.$SessionStatePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    title: string
+    text: string
     completed: boolean
-    sessionStateId: number | null
+    sessionStateId: number
   }, ExtArgs["result"]["task"]>
   composites: {}
 }
@@ -909,7 +909,7 @@ readonly fields: TaskFieldRefs;
  */
 export interface Prisma__TaskClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  SessionState<T extends Prisma.Task$SessionStateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Task$SessionStateArgs<ExtArgs>>): Prisma.Prisma__SessionStateClient<runtime.Types.Result.GetResult<Prisma.$SessionStatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  sessionState<T extends Prisma.SessionStateDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SessionStateDefaultArgs<ExtArgs>>): Prisma.Prisma__SessionStateClient<runtime.Types.Result.GetResult<Prisma.$SessionStatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -940,7 +940,7 @@ export interface Prisma__TaskClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface TaskFieldRefs {
   readonly id: Prisma.FieldRef<"Task", 'Int'>
-  readonly title: Prisma.FieldRef<"Task", 'String'>
+  readonly text: Prisma.FieldRef<"Task", 'String'>
   readonly completed: Prisma.FieldRef<"Task", 'Boolean'>
   readonly sessionStateId: Prisma.FieldRef<"Task", 'Int'>
 }
@@ -1339,25 +1339,6 @@ export type TaskDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Tasks to delete.
    */
   limit?: number
-}
-
-/**
- * Task.SessionState
- */
-export type Task$SessionStateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the SessionState
-   */
-  select?: Prisma.SessionStateSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the SessionState
-   */
-  omit?: Prisma.SessionStateOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SessionStateInclude<ExtArgs> | null
-  where?: Prisma.SessionStateWhereInput
 }
 
 /**

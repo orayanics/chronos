@@ -128,15 +128,3 @@ export function isAutoStart(mode: POMODORO_TYPE, settings: PSettings): boolean {
 		: settings.autoStartBreaks;
 	return autoStart;
 }
-
-// localStorage helpers
-export const loadState = <T>(key: string, defaultValue: T): T => {
-	if (typeof localStorage === "undefined") return defaultValue;
-	const stored = localStorage.getItem(key);
-	return stored ? JSON.parse(stored) : defaultValue;
-};
-
-export const saveState = <T>(key: string, value: T): void => {
-	if (typeof localStorage === "undefined") return;
-	localStorage.setItem(key, JSON.stringify(value));
-};

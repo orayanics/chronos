@@ -28,41 +28,46 @@ export type AggregateSettings = {
 
 export type SettingsAvgAggregateOutputType = {
   id: number | null
-  workDuration: number | null
-  shortBreakDuration: number | null
-  longBreakDuration: number | null
+  workMinutes: number | null
+  shortBreakMinutes: number | null
+  longBreakMinutes: number | null
+  cyclesBeforeLongBreak: number | null
 }
 
 export type SettingsSumAggregateOutputType = {
   id: number | null
-  workDuration: number | null
-  shortBreakDuration: number | null
-  longBreakDuration: number | null
+  workMinutes: number | null
+  shortBreakMinutes: number | null
+  longBreakMinutes: number | null
+  cyclesBeforeLongBreak: number | null
 }
 
 export type SettingsMinAggregateOutputType = {
   id: number | null
-  workDuration: number | null
-  shortBreakDuration: number | null
-  longBreakDuration: number | null
+  workMinutes: number | null
+  shortBreakMinutes: number | null
+  longBreakMinutes: number | null
+  cyclesBeforeLongBreak: number | null
   autoStartBreaks: boolean | null
   autoStartPomodoros: boolean | null
 }
 
 export type SettingsMaxAggregateOutputType = {
   id: number | null
-  workDuration: number | null
-  shortBreakDuration: number | null
-  longBreakDuration: number | null
+  workMinutes: number | null
+  shortBreakMinutes: number | null
+  longBreakMinutes: number | null
+  cyclesBeforeLongBreak: number | null
   autoStartBreaks: boolean | null
   autoStartPomodoros: boolean | null
 }
 
 export type SettingsCountAggregateOutputType = {
   id: number
-  workDuration: number
-  shortBreakDuration: number
-  longBreakDuration: number
+  workMinutes: number
+  shortBreakMinutes: number
+  longBreakMinutes: number
+  cyclesBeforeLongBreak: number
   autoStartBreaks: number
   autoStartPomodoros: number
   _all: number
@@ -71,41 +76,46 @@ export type SettingsCountAggregateOutputType = {
 
 export type SettingsAvgAggregateInputType = {
   id?: true
-  workDuration?: true
-  shortBreakDuration?: true
-  longBreakDuration?: true
+  workMinutes?: true
+  shortBreakMinutes?: true
+  longBreakMinutes?: true
+  cyclesBeforeLongBreak?: true
 }
 
 export type SettingsSumAggregateInputType = {
   id?: true
-  workDuration?: true
-  shortBreakDuration?: true
-  longBreakDuration?: true
+  workMinutes?: true
+  shortBreakMinutes?: true
+  longBreakMinutes?: true
+  cyclesBeforeLongBreak?: true
 }
 
 export type SettingsMinAggregateInputType = {
   id?: true
-  workDuration?: true
-  shortBreakDuration?: true
-  longBreakDuration?: true
+  workMinutes?: true
+  shortBreakMinutes?: true
+  longBreakMinutes?: true
+  cyclesBeforeLongBreak?: true
   autoStartBreaks?: true
   autoStartPomodoros?: true
 }
 
 export type SettingsMaxAggregateInputType = {
   id?: true
-  workDuration?: true
-  shortBreakDuration?: true
-  longBreakDuration?: true
+  workMinutes?: true
+  shortBreakMinutes?: true
+  longBreakMinutes?: true
+  cyclesBeforeLongBreak?: true
   autoStartBreaks?: true
   autoStartPomodoros?: true
 }
 
 export type SettingsCountAggregateInputType = {
   id?: true
-  workDuration?: true
-  shortBreakDuration?: true
-  longBreakDuration?: true
+  workMinutes?: true
+  shortBreakMinutes?: true
+  longBreakMinutes?: true
+  cyclesBeforeLongBreak?: true
   autoStartBreaks?: true
   autoStartPomodoros?: true
   _all?: true
@@ -199,9 +209,10 @@ export type SettingsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type SettingsGroupByOutputType = {
   id: number
-  workDuration: number
-  shortBreakDuration: number
-  longBreakDuration: number
+  workMinutes: number
+  shortBreakMinutes: number
+  longBreakMinutes: number
+  cyclesBeforeLongBreak: number
   autoStartBreaks: boolean
   autoStartPomodoros: boolean
   _count: SettingsCountAggregateOutputType | null
@@ -231,18 +242,20 @@ export type SettingsWhereInput = {
   OR?: Prisma.SettingsWhereInput[]
   NOT?: Prisma.SettingsWhereInput | Prisma.SettingsWhereInput[]
   id?: Prisma.IntFilter<"Settings"> | number
-  workDuration?: Prisma.IntFilter<"Settings"> | number
-  shortBreakDuration?: Prisma.IntFilter<"Settings"> | number
-  longBreakDuration?: Prisma.IntFilter<"Settings"> | number
+  workMinutes?: Prisma.IntFilter<"Settings"> | number
+  shortBreakMinutes?: Prisma.IntFilter<"Settings"> | number
+  longBreakMinutes?: Prisma.IntFilter<"Settings"> | number
+  cyclesBeforeLongBreak?: Prisma.IntFilter<"Settings"> | number
   autoStartBreaks?: Prisma.BoolFilter<"Settings"> | boolean
   autoStartPomodoros?: Prisma.BoolFilter<"Settings"> | boolean
 }
 
 export type SettingsOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  workDuration?: Prisma.SortOrder
-  shortBreakDuration?: Prisma.SortOrder
-  longBreakDuration?: Prisma.SortOrder
+  workMinutes?: Prisma.SortOrder
+  shortBreakMinutes?: Prisma.SortOrder
+  longBreakMinutes?: Prisma.SortOrder
+  cyclesBeforeLongBreak?: Prisma.SortOrder
   autoStartBreaks?: Prisma.SortOrder
   autoStartPomodoros?: Prisma.SortOrder
 }
@@ -252,18 +265,20 @@ export type SettingsWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.SettingsWhereInput | Prisma.SettingsWhereInput[]
   OR?: Prisma.SettingsWhereInput[]
   NOT?: Prisma.SettingsWhereInput | Prisma.SettingsWhereInput[]
-  workDuration?: Prisma.IntFilter<"Settings"> | number
-  shortBreakDuration?: Prisma.IntFilter<"Settings"> | number
-  longBreakDuration?: Prisma.IntFilter<"Settings"> | number
+  workMinutes?: Prisma.IntFilter<"Settings"> | number
+  shortBreakMinutes?: Prisma.IntFilter<"Settings"> | number
+  longBreakMinutes?: Prisma.IntFilter<"Settings"> | number
+  cyclesBeforeLongBreak?: Prisma.IntFilter<"Settings"> | number
   autoStartBreaks?: Prisma.BoolFilter<"Settings"> | boolean
   autoStartPomodoros?: Prisma.BoolFilter<"Settings"> | boolean
 }, "id">
 
 export type SettingsOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  workDuration?: Prisma.SortOrder
-  shortBreakDuration?: Prisma.SortOrder
-  longBreakDuration?: Prisma.SortOrder
+  workMinutes?: Prisma.SortOrder
+  shortBreakMinutes?: Prisma.SortOrder
+  longBreakMinutes?: Prisma.SortOrder
+  cyclesBeforeLongBreak?: Prisma.SortOrder
   autoStartBreaks?: Prisma.SortOrder
   autoStartPomodoros?: Prisma.SortOrder
   _count?: Prisma.SettingsCountOrderByAggregateInput
@@ -278,162 +293,183 @@ export type SettingsScalarWhereWithAggregatesInput = {
   OR?: Prisma.SettingsScalarWhereWithAggregatesInput[]
   NOT?: Prisma.SettingsScalarWhereWithAggregatesInput | Prisma.SettingsScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Settings"> | number
-  workDuration?: Prisma.IntWithAggregatesFilter<"Settings"> | number
-  shortBreakDuration?: Prisma.IntWithAggregatesFilter<"Settings"> | number
-  longBreakDuration?: Prisma.IntWithAggregatesFilter<"Settings"> | number
+  workMinutes?: Prisma.IntWithAggregatesFilter<"Settings"> | number
+  shortBreakMinutes?: Prisma.IntWithAggregatesFilter<"Settings"> | number
+  longBreakMinutes?: Prisma.IntWithAggregatesFilter<"Settings"> | number
+  cyclesBeforeLongBreak?: Prisma.IntWithAggregatesFilter<"Settings"> | number
   autoStartBreaks?: Prisma.BoolWithAggregatesFilter<"Settings"> | boolean
   autoStartPomodoros?: Prisma.BoolWithAggregatesFilter<"Settings"> | boolean
 }
 
 export type SettingsCreateInput = {
-  workDuration?: number
-  shortBreakDuration?: number
-  longBreakDuration?: number
+  id: number
+  workMinutes?: number
+  shortBreakMinutes?: number
+  longBreakMinutes?: number
+  cyclesBeforeLongBreak?: number
   autoStartBreaks?: boolean
   autoStartPomodoros?: boolean
 }
 
 export type SettingsUncheckedCreateInput = {
-  id?: number
-  workDuration?: number
-  shortBreakDuration?: number
-  longBreakDuration?: number
+  id: number
+  workMinutes?: number
+  shortBreakMinutes?: number
+  longBreakMinutes?: number
+  cyclesBeforeLongBreak?: number
   autoStartBreaks?: boolean
   autoStartPomodoros?: boolean
 }
 
 export type SettingsUpdateInput = {
-  workDuration?: Prisma.IntFieldUpdateOperationsInput | number
-  shortBreakDuration?: Prisma.IntFieldUpdateOperationsInput | number
-  longBreakDuration?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  workMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  shortBreakMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  longBreakMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  cyclesBeforeLongBreak?: Prisma.IntFieldUpdateOperationsInput | number
   autoStartBreaks?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoStartPomodoros?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SettingsUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  workDuration?: Prisma.IntFieldUpdateOperationsInput | number
-  shortBreakDuration?: Prisma.IntFieldUpdateOperationsInput | number
-  longBreakDuration?: Prisma.IntFieldUpdateOperationsInput | number
+  workMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  shortBreakMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  longBreakMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  cyclesBeforeLongBreak?: Prisma.IntFieldUpdateOperationsInput | number
   autoStartBreaks?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoStartPomodoros?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SettingsCreateManyInput = {
-  id?: number
-  workDuration?: number
-  shortBreakDuration?: number
-  longBreakDuration?: number
+  id: number
+  workMinutes?: number
+  shortBreakMinutes?: number
+  longBreakMinutes?: number
+  cyclesBeforeLongBreak?: number
   autoStartBreaks?: boolean
   autoStartPomodoros?: boolean
 }
 
 export type SettingsUpdateManyMutationInput = {
-  workDuration?: Prisma.IntFieldUpdateOperationsInput | number
-  shortBreakDuration?: Prisma.IntFieldUpdateOperationsInput | number
-  longBreakDuration?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  workMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  shortBreakMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  longBreakMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  cyclesBeforeLongBreak?: Prisma.IntFieldUpdateOperationsInput | number
   autoStartBreaks?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoStartPomodoros?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SettingsUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  workDuration?: Prisma.IntFieldUpdateOperationsInput | number
-  shortBreakDuration?: Prisma.IntFieldUpdateOperationsInput | number
-  longBreakDuration?: Prisma.IntFieldUpdateOperationsInput | number
+  workMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  shortBreakMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  longBreakMinutes?: Prisma.IntFieldUpdateOperationsInput | number
+  cyclesBeforeLongBreak?: Prisma.IntFieldUpdateOperationsInput | number
   autoStartBreaks?: Prisma.BoolFieldUpdateOperationsInput | boolean
   autoStartPomodoros?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SettingsCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  workDuration?: Prisma.SortOrder
-  shortBreakDuration?: Prisma.SortOrder
-  longBreakDuration?: Prisma.SortOrder
+  workMinutes?: Prisma.SortOrder
+  shortBreakMinutes?: Prisma.SortOrder
+  longBreakMinutes?: Prisma.SortOrder
+  cyclesBeforeLongBreak?: Prisma.SortOrder
   autoStartBreaks?: Prisma.SortOrder
   autoStartPomodoros?: Prisma.SortOrder
 }
 
 export type SettingsAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  workDuration?: Prisma.SortOrder
-  shortBreakDuration?: Prisma.SortOrder
-  longBreakDuration?: Prisma.SortOrder
+  workMinutes?: Prisma.SortOrder
+  shortBreakMinutes?: Prisma.SortOrder
+  longBreakMinutes?: Prisma.SortOrder
+  cyclesBeforeLongBreak?: Prisma.SortOrder
 }
 
 export type SettingsMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  workDuration?: Prisma.SortOrder
-  shortBreakDuration?: Prisma.SortOrder
-  longBreakDuration?: Prisma.SortOrder
+  workMinutes?: Prisma.SortOrder
+  shortBreakMinutes?: Prisma.SortOrder
+  longBreakMinutes?: Prisma.SortOrder
+  cyclesBeforeLongBreak?: Prisma.SortOrder
   autoStartBreaks?: Prisma.SortOrder
   autoStartPomodoros?: Prisma.SortOrder
 }
 
 export type SettingsMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  workDuration?: Prisma.SortOrder
-  shortBreakDuration?: Prisma.SortOrder
-  longBreakDuration?: Prisma.SortOrder
+  workMinutes?: Prisma.SortOrder
+  shortBreakMinutes?: Prisma.SortOrder
+  longBreakMinutes?: Prisma.SortOrder
+  cyclesBeforeLongBreak?: Prisma.SortOrder
   autoStartBreaks?: Prisma.SortOrder
   autoStartPomodoros?: Prisma.SortOrder
 }
 
 export type SettingsSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  workDuration?: Prisma.SortOrder
-  shortBreakDuration?: Prisma.SortOrder
-  longBreakDuration?: Prisma.SortOrder
+  workMinutes?: Prisma.SortOrder
+  shortBreakMinutes?: Prisma.SortOrder
+  longBreakMinutes?: Prisma.SortOrder
+  cyclesBeforeLongBreak?: Prisma.SortOrder
 }
 
 
 
 export type SettingsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  workDuration?: boolean
-  shortBreakDuration?: boolean
-  longBreakDuration?: boolean
+  workMinutes?: boolean
+  shortBreakMinutes?: boolean
+  longBreakMinutes?: boolean
+  cyclesBeforeLongBreak?: boolean
   autoStartBreaks?: boolean
   autoStartPomodoros?: boolean
 }, ExtArgs["result"]["settings"]>
 
 export type SettingsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  workDuration?: boolean
-  shortBreakDuration?: boolean
-  longBreakDuration?: boolean
+  workMinutes?: boolean
+  shortBreakMinutes?: boolean
+  longBreakMinutes?: boolean
+  cyclesBeforeLongBreak?: boolean
   autoStartBreaks?: boolean
   autoStartPomodoros?: boolean
 }, ExtArgs["result"]["settings"]>
 
 export type SettingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  workDuration?: boolean
-  shortBreakDuration?: boolean
-  longBreakDuration?: boolean
+  workMinutes?: boolean
+  shortBreakMinutes?: boolean
+  longBreakMinutes?: boolean
+  cyclesBeforeLongBreak?: boolean
   autoStartBreaks?: boolean
   autoStartPomodoros?: boolean
 }, ExtArgs["result"]["settings"]>
 
 export type SettingsSelectScalar = {
   id?: boolean
-  workDuration?: boolean
-  shortBreakDuration?: boolean
-  longBreakDuration?: boolean
+  workMinutes?: boolean
+  shortBreakMinutes?: boolean
+  longBreakMinutes?: boolean
+  cyclesBeforeLongBreak?: boolean
   autoStartBreaks?: boolean
   autoStartPomodoros?: boolean
 }
 
-export type SettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "workDuration" | "shortBreakDuration" | "longBreakDuration" | "autoStartBreaks" | "autoStartPomodoros", ExtArgs["result"]["settings"]>
+export type SettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "workMinutes" | "shortBreakMinutes" | "longBreakMinutes" | "cyclesBeforeLongBreak" | "autoStartBreaks" | "autoStartPomodoros", ExtArgs["result"]["settings"]>
 
 export type $SettingsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Settings"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    workDuration: number
-    shortBreakDuration: number
-    longBreakDuration: number
+    workMinutes: number
+    shortBreakMinutes: number
+    longBreakMinutes: number
+    cyclesBeforeLongBreak: number
     autoStartBreaks: boolean
     autoStartPomodoros: boolean
   }, ExtArgs["result"]["settings"]>
@@ -860,9 +896,10 @@ export interface Prisma__SettingsClient<T, Null = never, ExtArgs extends runtime
  */
 export interface SettingsFieldRefs {
   readonly id: Prisma.FieldRef<"Settings", 'Int'>
-  readonly workDuration: Prisma.FieldRef<"Settings", 'Int'>
-  readonly shortBreakDuration: Prisma.FieldRef<"Settings", 'Int'>
-  readonly longBreakDuration: Prisma.FieldRef<"Settings", 'Int'>
+  readonly workMinutes: Prisma.FieldRef<"Settings", 'Int'>
+  readonly shortBreakMinutes: Prisma.FieldRef<"Settings", 'Int'>
+  readonly longBreakMinutes: Prisma.FieldRef<"Settings", 'Int'>
+  readonly cyclesBeforeLongBreak: Prisma.FieldRef<"Settings", 'Int'>
   readonly autoStartBreaks: Prisma.FieldRef<"Settings", 'Boolean'>
   readonly autoStartPomodoros: Prisma.FieldRef<"Settings", 'Boolean'>
 }
@@ -1064,7 +1101,7 @@ export type SettingsCreateArgs<ExtArgs extends runtime.Types.Extensions.Internal
   /**
    * The data needed to create a Settings.
    */
-  data?: Prisma.XOR<Prisma.SettingsCreateInput, Prisma.SettingsUncheckedCreateInput>
+  data: Prisma.XOR<Prisma.SettingsCreateInput, Prisma.SettingsUncheckedCreateInput>
 }
 
 /**

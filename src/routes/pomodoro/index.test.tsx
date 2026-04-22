@@ -48,8 +48,8 @@ function makeHookState(session: PSessionState) {
 		mode: "WORK" as const,
 		isRunning: false,
 		showSettings: false,
-		setSession: vi.fn(),
-		setSettings: vi.fn(),
+		updateSettings: vi.fn(),
+		clearSession: vi.fn(),
 		setShowSettings: vi.fn(),
 		handleRestart: vi.fn(),
 		handleSkip: vi.fn(),
@@ -59,7 +59,6 @@ function makeHookState(session: PSessionState) {
 		updateTask: vi.fn(),
 		resume: vi.fn(),
 		pause: vi.fn(),
-		restart: vi.fn(),
 		switchMode: vi.fn(),
 	};
 }
@@ -73,15 +72,14 @@ describe("PomodoroApp share flow", () => {
 		cleanup();
 	});
 
-	it("disables Share Session when there is no completed focus log", () => {
+	it("hides Share Session when there is no completed focus log", () => {
 		usePomodoroMock.mockReturnValue(makeHookState(makeSession()));
 
 		render(<PomodoroApp />);
 
-		expect(screen.getByRole("button", { name: "Share Session" })).toHaveProperty(
-			"disabled",
-			true,
-		);
+		expect(
+			screen.queryByRole("button", { name: "Share Session" }),
+		).toBeNull();
 	});
 
 	it("opens the share preview for a completed session", () => {
@@ -91,7 +89,7 @@ describe("PomodoroApp share flow", () => {
 					pomodorosCompleted: 2,
 					logs: [
 						{
-							id: "work-1",
+							id: 1,
 							type: "WORK",
 							duration: 25,
 							completedAt: Date.UTC(2026, 3, 20, 8, 25, 0),

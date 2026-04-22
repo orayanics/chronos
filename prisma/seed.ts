@@ -1,35 +1,54 @@
-import { PrismaClient } from '../src/generated/prisma/client.js'
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaClient } from "../src/generated/prisma/client.js";
 
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
 const adapter = new PrismaBetterSqlite3({
-  url: process.env.DATABASE_URL || 'file:./dev.db',
-})
+	url: process.env.DATABASE_URL || "file:./dev.db",
+});
 
-const prisma = new PrismaClient({ adapter })
+const prisma = new PrismaClient({ adapter });
+
+const SETTINGS_ID = 1;
+const SESSION_STATE_ID = 1;
 
 async function main() {
-  console.log('🌱 Seeding database...')
+	console.log("Seeding pomodoro defaults...");
 
-  // Clear existing todos
-  await prisma.todo.deleteMany()
+	await prisma.settings.upsert({
+		where: { id: SETTINGS_ID },
+		update: {},
+		create: {
+			id: SETTINGS_ID,
+			workMinutes: 25,
+			shortBreakMinutes: 5,
+			longBreakMinutes: 15,
+			cyclesBeforeLongBreak: 4,
+			autoStartBreaks: false,
+			autoStartPomodoros: false,
+		},
+	});
 
-  // Create example todos
-  const todos = await prisma.todo.createMany({
-    data: [
-      { title: 'Buy groceries' },
-      { title: 'Read a book' },
-      { title: 'Workout' },
-    ],
-  })
+	await prisma.sessionState.upsert({
+		where: { id: SESSION_STATE_ID },
+		update: {},
+		create: {
+			id: SESSION_STATE_ID,
+			startedAt: Date.now(),
+			currentMode: "WORK",
+			pomodorosCompleted: 0,
+			shortBreaksCompleted: 0,
+			longBreaksCompleted: 0,
+			currentCycleCount: 0,
+		},
+	});
 
-  console.log(`✅ Created ${todos.count} todos`)
+	console.log("Pomodoro defaults are ready.");
 }
 
 main()
-  .catch((e) => {
-    console.error('❌ Error seeding database:', e)
-    process.exit(1)
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
+	.catch((error) => {
+		console.error("Error seeding database:", error);
+		process.exit(1);
+	})
+	.finally(async () => {
+		await prisma.$disconnect();
+	});

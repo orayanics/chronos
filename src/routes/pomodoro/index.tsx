@@ -9,15 +9,10 @@ import {
 	Timer,
 } from "#/modules/pomodoro/components";
 
-import {
-	createDefaultSession,
-	LABEL_MAP,
-	TYPES,
-} from "#/modules/pomodoro/constant";
+import { LABEL_MAP, TYPES } from "#/modules/pomodoro/constant";
 import type { PPomodoroInitialState } from "#/modules/pomodoro/schema";
 import { canShareSession } from "#/modules/pomodoro/share";
 import usePomodoro from "#/modules/pomodoro/usePomodoro";
-import { duration, expiry, saveState } from "#/modules/pomodoro/util";
 import { getPomodoroInitialState } from "#/server/pomodoro";
 
 export const Route = createFileRoute("/pomodoro/")({
@@ -37,8 +32,7 @@ export function PomodoroApp({
 		mode,
 		isRunning,
 		showSettings,
-		setSession,
-		setSettings,
+		updateSettings,
 		setShowSettings,
 		handleRestart,
 		handleSkip,
@@ -46,14 +40,15 @@ export function PomodoroApp({
 		toggleTask,
 		deleteTask,
 		updateTask,
+		clearSession,
 		resume,
 		pause,
-		restart,
 		switchMode,
 	} = usePomodoro(initialState);
 	const [showShare, setShowShare] = useState(false);
 	const { hours, minutes, seconds } = time;
 	const shareEnabled = canShareSession(session);
+
 	return (
 		<div className="max-w-md md:max-w-4xl w-full min-h-screen mx-auto p-4 space-y-6">
 			<div className="flex justify-between items-center">
@@ -69,12 +64,7 @@ export function PomodoroApp({
 			</div>
 
 			<div className="flex flex-col justify-center items-center gap-2">
-				<Timer
-					hours={hours ?? 0}
-					minutes={minutes ?? 0}
-					seconds={seconds ?? 0}
-					mode={mode}
-				/>
+				<Timer hours={hours} minutes={minutes} seconds={seconds} mode={mode} />
 
 				<div className="flex gap-2">
 					<button
@@ -164,17 +154,9 @@ export function PomodoroApp({
 				isOpen={showSettings}
 				onClose={() => setShowSettings(false)}
 				settings={settings}
-				onChange={(s) => {
-					setSettings(s);
-					// TODO: Decide final behavior for UX
-					// Reset timer when settings change
-					const expiryT = expiry(duration(mode, s));
-					restart(expiryT, false);
-				}}
+				onChange={updateSettings}
 				onClearSession={() => {
-					const nextSession = createDefaultSession();
-					setSession(nextSession);
-					saveState("session", nextSession);
+					void clearSession();
 					setShowShare(false);
 				}}
 			/>

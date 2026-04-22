@@ -47,6 +47,7 @@ export type SessionStateSumAggregateOutputType = {
 export type SessionStateMinAggregateOutputType = {
   id: number | null
   startedAt: number | null
+  currentMode: $Enums.POMODORO_TYPE | null
   pomodorosCompleted: number | null
   shortBreaksCompleted: number | null
   longBreaksCompleted: number | null
@@ -56,6 +57,7 @@ export type SessionStateMinAggregateOutputType = {
 export type SessionStateMaxAggregateOutputType = {
   id: number | null
   startedAt: number | null
+  currentMode: $Enums.POMODORO_TYPE | null
   pomodorosCompleted: number | null
   shortBreaksCompleted: number | null
   longBreaksCompleted: number | null
@@ -65,6 +67,7 @@ export type SessionStateMaxAggregateOutputType = {
 export type SessionStateCountAggregateOutputType = {
   id: number
   startedAt: number
+  currentMode: number
   pomodorosCompleted: number
   shortBreaksCompleted: number
   longBreaksCompleted: number
@@ -94,6 +97,7 @@ export type SessionStateSumAggregateInputType = {
 export type SessionStateMinAggregateInputType = {
   id?: true
   startedAt?: true
+  currentMode?: true
   pomodorosCompleted?: true
   shortBreaksCompleted?: true
   longBreaksCompleted?: true
@@ -103,6 +107,7 @@ export type SessionStateMinAggregateInputType = {
 export type SessionStateMaxAggregateInputType = {
   id?: true
   startedAt?: true
+  currentMode?: true
   pomodorosCompleted?: true
   shortBreaksCompleted?: true
   longBreaksCompleted?: true
@@ -112,6 +117,7 @@ export type SessionStateMaxAggregateInputType = {
 export type SessionStateCountAggregateInputType = {
   id?: true
   startedAt?: true
+  currentMode?: true
   pomodorosCompleted?: true
   shortBreaksCompleted?: true
   longBreaksCompleted?: true
@@ -208,6 +214,7 @@ export type SessionStateGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type SessionStateGroupByOutputType = {
   id: number
   startedAt: number
+  currentMode: $Enums.POMODORO_TYPE
   pomodorosCompleted: number
   shortBreaksCompleted: number
   longBreaksCompleted: number
@@ -240,6 +247,7 @@ export type SessionStateWhereInput = {
   NOT?: Prisma.SessionStateWhereInput | Prisma.SessionStateWhereInput[]
   id?: Prisma.IntFilter<"SessionState"> | number
   startedAt?: Prisma.IntFilter<"SessionState"> | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEFilter<"SessionState"> | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntFilter<"SessionState"> | number
   shortBreaksCompleted?: Prisma.IntFilter<"SessionState"> | number
   longBreaksCompleted?: Prisma.IntFilter<"SessionState"> | number
@@ -251,6 +259,7 @@ export type SessionStateWhereInput = {
 export type SessionStateOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
+  currentMode?: Prisma.SortOrder
   pomodorosCompleted?: Prisma.SortOrder
   shortBreaksCompleted?: Prisma.SortOrder
   longBreaksCompleted?: Prisma.SortOrder
@@ -265,6 +274,7 @@ export type SessionStateWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SessionStateWhereInput[]
   NOT?: Prisma.SessionStateWhereInput | Prisma.SessionStateWhereInput[]
   startedAt?: Prisma.IntFilter<"SessionState"> | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEFilter<"SessionState"> | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntFilter<"SessionState"> | number
   shortBreaksCompleted?: Prisma.IntFilter<"SessionState"> | number
   longBreaksCompleted?: Prisma.IntFilter<"SessionState"> | number
@@ -276,6 +286,7 @@ export type SessionStateWhereUniqueInput = Prisma.AtLeast<{
 export type SessionStateOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
+  currentMode?: Prisma.SortOrder
   pomodorosCompleted?: Prisma.SortOrder
   shortBreaksCompleted?: Prisma.SortOrder
   longBreaksCompleted?: Prisma.SortOrder
@@ -293,6 +304,7 @@ export type SessionStateScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SessionStateScalarWhereWithAggregatesInput | Prisma.SessionStateScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"SessionState"> | number
   startedAt?: Prisma.IntWithAggregatesFilter<"SessionState"> | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEWithAggregatesFilter<"SessionState"> | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntWithAggregatesFilter<"SessionState"> | number
   shortBreaksCompleted?: Prisma.IntWithAggregatesFilter<"SessionState"> | number
   longBreaksCompleted?: Prisma.IntWithAggregatesFilter<"SessionState"> | number
@@ -300,7 +312,9 @@ export type SessionStateScalarWhereWithAggregatesInput = {
 }
 
 export type SessionStateCreateInput = {
+  id: number
   startedAt?: number
+  currentMode?: $Enums.POMODORO_TYPE
   pomodorosCompleted?: number
   shortBreaksCompleted?: number
   longBreaksCompleted?: number
@@ -310,8 +324,9 @@ export type SessionStateCreateInput = {
 }
 
 export type SessionStateUncheckedCreateInput = {
-  id?: number
+  id: number
   startedAt?: number
+  currentMode?: $Enums.POMODORO_TYPE
   pomodorosCompleted?: number
   shortBreaksCompleted?: number
   longBreaksCompleted?: number
@@ -321,7 +336,9 @@ export type SessionStateUncheckedCreateInput = {
 }
 
 export type SessionStateUpdateInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.IntFieldUpdateOperationsInput | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   shortBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   longBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
@@ -333,6 +350,7 @@ export type SessionStateUpdateInput = {
 export type SessionStateUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.IntFieldUpdateOperationsInput | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   shortBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   longBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
@@ -342,8 +360,9 @@ export type SessionStateUncheckedUpdateInput = {
 }
 
 export type SessionStateCreateManyInput = {
-  id?: number
+  id: number
   startedAt?: number
+  currentMode?: $Enums.POMODORO_TYPE
   pomodorosCompleted?: number
   shortBreaksCompleted?: number
   longBreaksCompleted?: number
@@ -351,7 +370,9 @@ export type SessionStateCreateManyInput = {
 }
 
 export type SessionStateUpdateManyMutationInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.IntFieldUpdateOperationsInput | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   shortBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   longBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
@@ -361,20 +382,22 @@ export type SessionStateUpdateManyMutationInput = {
 export type SessionStateUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.IntFieldUpdateOperationsInput | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   shortBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   longBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   currentCycleCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
-export type SessionStateNullableScalarRelationFilter = {
-  is?: Prisma.SessionStateWhereInput | null
-  isNot?: Prisma.SessionStateWhereInput | null
+export type SessionStateScalarRelationFilter = {
+  is?: Prisma.SessionStateWhereInput
+  isNot?: Prisma.SessionStateWhereInput
 }
 
 export type SessionStateCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
+  currentMode?: Prisma.SortOrder
   pomodorosCompleted?: Prisma.SortOrder
   shortBreaksCompleted?: Prisma.SortOrder
   longBreaksCompleted?: Prisma.SortOrder
@@ -393,6 +416,7 @@ export type SessionStateAvgOrderByAggregateInput = {
 export type SessionStateMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
+  currentMode?: Prisma.SortOrder
   pomodorosCompleted?: Prisma.SortOrder
   shortBreaksCompleted?: Prisma.SortOrder
   longBreaksCompleted?: Prisma.SortOrder
@@ -402,6 +426,7 @@ export type SessionStateMaxOrderByAggregateInput = {
 export type SessionStateMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
+  currentMode?: Prisma.SortOrder
   pomodorosCompleted?: Prisma.SortOrder
   shortBreaksCompleted?: Prisma.SortOrder
   longBreaksCompleted?: Prisma.SortOrder
@@ -423,12 +448,10 @@ export type SessionStateCreateNestedOneWithoutLogsInput = {
   connect?: Prisma.SessionStateWhereUniqueInput
 }
 
-export type SessionStateUpdateOneWithoutLogsNestedInput = {
+export type SessionStateUpdateOneRequiredWithoutLogsNestedInput = {
   create?: Prisma.XOR<Prisma.SessionStateCreateWithoutLogsInput, Prisma.SessionStateUncheckedCreateWithoutLogsInput>
   connectOrCreate?: Prisma.SessionStateCreateOrConnectWithoutLogsInput
   upsert?: Prisma.SessionStateUpsertWithoutLogsInput
-  disconnect?: Prisma.SessionStateWhereInput | boolean
-  delete?: Prisma.SessionStateWhereInput | boolean
   connect?: Prisma.SessionStateWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SessionStateUpdateToOneWithWhereWithoutLogsInput, Prisma.SessionStateUpdateWithoutLogsInput>, Prisma.SessionStateUncheckedUpdateWithoutLogsInput>
 }
@@ -439,18 +462,18 @@ export type SessionStateCreateNestedOneWithoutTasksInput = {
   connect?: Prisma.SessionStateWhereUniqueInput
 }
 
-export type SessionStateUpdateOneWithoutTasksNestedInput = {
+export type SessionStateUpdateOneRequiredWithoutTasksNestedInput = {
   create?: Prisma.XOR<Prisma.SessionStateCreateWithoutTasksInput, Prisma.SessionStateUncheckedCreateWithoutTasksInput>
   connectOrCreate?: Prisma.SessionStateCreateOrConnectWithoutTasksInput
   upsert?: Prisma.SessionStateUpsertWithoutTasksInput
-  disconnect?: Prisma.SessionStateWhereInput | boolean
-  delete?: Prisma.SessionStateWhereInput | boolean
   connect?: Prisma.SessionStateWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SessionStateUpdateToOneWithWhereWithoutTasksInput, Prisma.SessionStateUpdateWithoutTasksInput>, Prisma.SessionStateUncheckedUpdateWithoutTasksInput>
 }
 
 export type SessionStateCreateWithoutLogsInput = {
+  id: number
   startedAt?: number
+  currentMode?: $Enums.POMODORO_TYPE
   pomodorosCompleted?: number
   shortBreaksCompleted?: number
   longBreaksCompleted?: number
@@ -459,8 +482,9 @@ export type SessionStateCreateWithoutLogsInput = {
 }
 
 export type SessionStateUncheckedCreateWithoutLogsInput = {
-  id?: number
+  id: number
   startedAt?: number
+  currentMode?: $Enums.POMODORO_TYPE
   pomodorosCompleted?: number
   shortBreaksCompleted?: number
   longBreaksCompleted?: number
@@ -485,7 +509,9 @@ export type SessionStateUpdateToOneWithWhereWithoutLogsInput = {
 }
 
 export type SessionStateUpdateWithoutLogsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.IntFieldUpdateOperationsInput | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   shortBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   longBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
@@ -496,6 +522,7 @@ export type SessionStateUpdateWithoutLogsInput = {
 export type SessionStateUncheckedUpdateWithoutLogsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.IntFieldUpdateOperationsInput | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   shortBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   longBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
@@ -504,7 +531,9 @@ export type SessionStateUncheckedUpdateWithoutLogsInput = {
 }
 
 export type SessionStateCreateWithoutTasksInput = {
+  id: number
   startedAt?: number
+  currentMode?: $Enums.POMODORO_TYPE
   pomodorosCompleted?: number
   shortBreaksCompleted?: number
   longBreaksCompleted?: number
@@ -513,8 +542,9 @@ export type SessionStateCreateWithoutTasksInput = {
 }
 
 export type SessionStateUncheckedCreateWithoutTasksInput = {
-  id?: number
+  id: number
   startedAt?: number
+  currentMode?: $Enums.POMODORO_TYPE
   pomodorosCompleted?: number
   shortBreaksCompleted?: number
   longBreaksCompleted?: number
@@ -539,7 +569,9 @@ export type SessionStateUpdateToOneWithWhereWithoutTasksInput = {
 }
 
 export type SessionStateUpdateWithoutTasksInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.IntFieldUpdateOperationsInput | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   shortBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   longBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
@@ -550,6 +582,7 @@ export type SessionStateUpdateWithoutTasksInput = {
 export type SessionStateUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   startedAt?: Prisma.IntFieldUpdateOperationsInput | number
+  currentMode?: Prisma.EnumPOMODORO_TYPEFieldUpdateOperationsInput | $Enums.POMODORO_TYPE
   pomodorosCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   shortBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
   longBreaksCompleted?: Prisma.IntFieldUpdateOperationsInput | number
@@ -600,6 +633,7 @@ export type SessionStateCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Ty
 export type SessionStateSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   startedAt?: boolean
+  currentMode?: boolean
   pomodorosCompleted?: boolean
   shortBreaksCompleted?: boolean
   longBreaksCompleted?: boolean
@@ -612,6 +646,7 @@ export type SessionStateSelect<ExtArgs extends runtime.Types.Extensions.Internal
 export type SessionStateSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   startedAt?: boolean
+  currentMode?: boolean
   pomodorosCompleted?: boolean
   shortBreaksCompleted?: boolean
   longBreaksCompleted?: boolean
@@ -621,6 +656,7 @@ export type SessionStateSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
 export type SessionStateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   startedAt?: boolean
+  currentMode?: boolean
   pomodorosCompleted?: boolean
   shortBreaksCompleted?: boolean
   longBreaksCompleted?: boolean
@@ -630,13 +666,14 @@ export type SessionStateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type SessionStateSelectScalar = {
   id?: boolean
   startedAt?: boolean
+  currentMode?: boolean
   pomodorosCompleted?: boolean
   shortBreaksCompleted?: boolean
   longBreaksCompleted?: boolean
   currentCycleCount?: boolean
 }
 
-export type SessionStateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startedAt" | "pomodorosCompleted" | "shortBreaksCompleted" | "longBreaksCompleted" | "currentCycleCount", ExtArgs["result"]["sessionState"]>
+export type SessionStateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "startedAt" | "currentMode" | "pomodorosCompleted" | "shortBreaksCompleted" | "longBreaksCompleted" | "currentCycleCount", ExtArgs["result"]["sessionState"]>
 export type SessionStateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   logs?: boolean | Prisma.SessionState$logsArgs<ExtArgs>
   tasks?: boolean | Prisma.SessionState$tasksArgs<ExtArgs>
@@ -654,6 +691,7 @@ export type $SessionStatePayload<ExtArgs extends runtime.Types.Extensions.Intern
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     startedAt: number
+    currentMode: $Enums.POMODORO_TYPE
     pomodorosCompleted: number
     shortBreaksCompleted: number
     longBreaksCompleted: number
@@ -1085,6 +1123,7 @@ export interface Prisma__SessionStateClient<T, Null = never, ExtArgs extends run
 export interface SessionStateFieldRefs {
   readonly id: Prisma.FieldRef<"SessionState", 'Int'>
   readonly startedAt: Prisma.FieldRef<"SessionState", 'Int'>
+  readonly currentMode: Prisma.FieldRef<"SessionState", 'POMODORO_TYPE'>
   readonly pomodorosCompleted: Prisma.FieldRef<"SessionState", 'Int'>
   readonly shortBreaksCompleted: Prisma.FieldRef<"SessionState", 'Int'>
   readonly longBreaksCompleted: Prisma.FieldRef<"SessionState", 'Int'>
@@ -1312,7 +1351,7 @@ export type SessionStateCreateArgs<ExtArgs extends runtime.Types.Extensions.Inte
   /**
    * The data needed to create a SessionState.
    */
-  data?: Prisma.XOR<Prisma.SessionStateCreateInput, Prisma.SessionStateUncheckedCreateInput>
+  data: Prisma.XOR<Prisma.SessionStateCreateInput, Prisma.SessionStateUncheckedCreateInput>
 }
 
 /**

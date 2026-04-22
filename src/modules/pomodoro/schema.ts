@@ -1,14 +1,14 @@
 export type POMODORO_TYPE = "WORK" | "SHORT" | "LONG";
 
 export interface PSessionLog {
-	id: string;
+	id: number;
 	type: POMODORO_TYPE;
 	duration: number; // in exact integer, no rounded & double
 	completedAt: number;
 }
 
 export interface PTask {
-	id: string;
+	id: number;
 	text: string;
 	completed: boolean;
 }

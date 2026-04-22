@@ -3,10 +3,10 @@ import type { PTask } from "../schema";
 
 interface TasksProps {
 	tasks?: PTask[] | null;
-	onAdd: (text: string) => void;
-	onToggle: (id: string) => void;
-	onDelete: (id: string) => void;
-	onUpdate: (id: string, text: string) => void;
+	onAdd: (text: string) => void | Promise<void>;
+	onToggle: (id: number) => void | Promise<void>;
+	onDelete: (id: number) => void | Promise<void>;
+	onUpdate: (id: number, text: string) => void | Promise<void>;
 }
 
 export default function Tasks({
@@ -17,18 +17,20 @@ export default function Tasks({
 	onUpdate,
 }: TasksProps) {
 	const [input, setInput] = useState("");
-	const [editId, setEditId] = useState<string | null>(null);
+	const [editId, setEditId] = useState<number | null>(null);
 	const [editText, setEditText] = useState("");
 
 	const commit = () => {
 		if (input.trim()) {
-			onAdd(input.trim());
+			void onAdd(input.trim());
 			setInput("");
 		}
 	};
 
-	const commitEdit = (id: string) => {
-		if (editText.trim()) onUpdate(id, editText.trim());
+	const commitEdit = (id: number) => {
+		if (editText.trim()) {
+			void onUpdate(id, editText.trim());
+		}
 		setEditId(null);
 		setEditText("");
 	};
@@ -65,7 +67,13 @@ export default function Tasks({
 			<div className="flex flex-col gap-2">
 				{data.map((task) => (
 					<div key={task.id} className="flex gap-1 items-center">
-						<input type="checkbox" onChange={() => onToggle(task.id)} />
+						<input
+							type="checkbox"
+							checked={task.completed}
+							onChange={() => {
+								void onToggle(task.id);
+							}}
+						/>
 
 						{editId === task.id ? (
 							<input
@@ -101,7 +109,9 @@ export default function Tasks({
 
 						<button
 							type="button"
-							onClick={() => onDelete(task.id)}
+							onClick={() => {
+								void onDelete(task.id);
+							}}
 							className="cursor-pointer shadow rounded-lg border px-2 py-1
 					transition bg-primary text-white hover:inset-shadow-secondary/20 hover:inset-shadow-sm"
 						>

@@ -16,13 +16,13 @@ function makeSession(
 		currentCycleCount: 3,
 		logs: [
 			{
-				id: "work-1",
+				id: 1,
 				type: "WORK",
 				duration: 25,
 				completedAt: Date.UTC(2026, 3, 20, 8, 25, 0),
 			},
 			{
-				id: "work-2",
+				id: 2,
 				type: "WORK",
 				duration: 40,
 				completedAt: Date.UTC(2026, 3, 20, 9, 15, 0),
@@ -39,19 +39,19 @@ describe("normalizeSessionState", () => {
 			pomodorosCompleted: 2,
 			logs: [
 				{
-					id: "short-1",
+					id: 1,
 					type: "SHORT",
 					duration: 5,
 					completedAt: 300,
 				},
 				{
-					id: "work-2",
+					id: 2,
 					type: "WORK",
 					duration: 25,
 					completedAt: 200,
 				},
 				{
-					id: "work-1",
+					id: 3,
 					type: "WORK",
 					duration: 25,
 					completedAt: 100,
@@ -107,7 +107,7 @@ describe("getShareSessionData", () => {
 			makeSession({
 				logs: [
 					{
-						id: "short-1",
+						id: 1,
 						type: "SHORT",
 						duration: 5,
 						completedAt: Date.UTC(2026, 3, 20, 8, 30, 0),
