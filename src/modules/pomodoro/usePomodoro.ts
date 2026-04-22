@@ -68,70 +68,71 @@ export default function usePomodoro() {
 	/** Stable ref so onExpire can call restart without capturing a stale copy. */
 	const restartRef = useRef<(d: Date, autoStart?: boolean) => void>(() => {});
 
-	const { seconds, minutes, isRunning, pause, resume, restart } = useTimer({
-		expiryTimestamp: expiry(duration(mode, settings)),
-		autoStart: false,
-		onExpire() {
-			const currentMode = modeRef.current;
-			const s = settingsRef.current;
-			const currentSession = sessionRef.current;
+	const { hours, seconds, minutes, isRunning, pause, resume, restart } =
+		useTimer({
+			expiryTimestamp: expiry(duration(mode, settings)),
+			autoStart: false,
+			onExpire() {
+				const currentMode = modeRef.current;
+				const s = settingsRef.current;
+				const currentSession = sessionRef.current;
 
-			// Save: completed interval
-			const durationMinutes = duration(currentMode, s);
-			const logEntry: PSessionLog = {
-				id: crypto.randomUUID(),
-				type: currentMode,
-				duration: durationMinutes,
-				completedAt: Date.now(),
-			};
-
-			// Increment on work completion; reset to 0 after a long break.
-			const nextCycleCount = getNextCycleCount(
-				currentMode,
-				currentSession.currentCycleCount,
-			);
-
-			setSession((prev) => {
-				const updated: PSessionState = {
-					...prev,
-					pomodorosCompleted:
-						currentMode === "WORK"
-							? prev.pomodorosCompleted + 1
-							: prev.pomodorosCompleted,
-					shortBreaksCompleted:
-						currentMode === "SHORT"
-							? prev.shortBreaksCompleted + 1
-							: prev.shortBreaksCompleted,
-					longBreaksCompleted:
-						currentMode === "LONG"
-							? prev.longBreaksCompleted + 1
-							: prev.longBreaksCompleted,
-					currentCycleCount: nextCycleCount,
-					logs: Array.isArray(prev.logs)
-						? [...prev.logs, logEntry]
-						: [logEntry],
+				// Save: completed interval
+				const durationMinutes = duration(currentMode, s);
+				const logEntry: PSessionLog = {
+					id: crypto.randomUUID(),
+					type: currentMode,
+					duration: durationMinutes,
+					completedAt: Date.now(),
 				};
-				return updated;
-			});
 
-			const nextMode = getNextModeFromCycle(
-				currentMode,
-				nextCycleCount,
-				s.cyclesBeforeLongBreak,
-			);
+				// Increment on work completion; reset to 0 after a long break.
+				const nextCycleCount = getNextCycleCount(
+					currentMode,
+					currentSession.currentCycleCount,
+				);
 
-			setMode(nextMode);
-			const nextExpiry = expiry(duration(nextMode, s));
+				setSession((prev) => {
+					const updated: PSessionState = {
+						...prev,
+						pomodorosCompleted:
+							currentMode === "WORK"
+								? prev.pomodorosCompleted + 1
+								: prev.pomodorosCompleted,
+						shortBreaksCompleted:
+							currentMode === "SHORT"
+								? prev.shortBreaksCompleted + 1
+								: prev.shortBreaksCompleted,
+						longBreaksCompleted:
+							currentMode === "LONG"
+								? prev.longBreaksCompleted + 1
+								: prev.longBreaksCompleted,
+						currentCycleCount: nextCycleCount,
+						logs: Array.isArray(prev.logs)
+							? [...prev.logs, logEntry]
+							: [logEntry],
+					};
+					return updated;
+				});
 
-			const autoStart = isAutoStart(nextMode, s);
+				const nextMode = getNextModeFromCycle(
+					currentMode,
+					nextCycleCount,
+					s.cyclesBeforeLongBreak,
+				);
 
-			// react-timer-hook calls this.pause() on the Timer instance immediately
-			// after onExpire() returns, killing any interval restart() started
-			// synchronously. Defer past that pause() with setTimeout(0).
-			setTimeout(() => restartRef.current(nextExpiry, autoStart), 0);
-			// TODO: Sync to server
-		},
-	});
+				setMode(nextMode);
+				const nextExpiry = expiry(duration(nextMode, s));
+
+				const autoStart = isAutoStart(nextMode, s);
+
+				// react-timer-hook calls this.pause() on the Timer instance immediately
+				// after onExpire() returns, killing any interval restart() started
+				// synchronously. Defer past that pause() with setTimeout(0).
+				setTimeout(() => restartRef.current(nextExpiry, autoStart), 0);
+				// TODO: Sync to server
+			},
+		});
 
 	// Keep restartRef current after each render
 	restartRef.current = restart;
@@ -209,7 +210,7 @@ export default function usePomodoro() {
 		settings,
 		session,
 		showSettings,
-		time: { minutes, seconds },
+		time: { hours, minutes, seconds },
 		isRunning,
 		switchMode,
 		handleRestart,

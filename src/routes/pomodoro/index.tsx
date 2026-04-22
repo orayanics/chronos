@@ -38,7 +38,7 @@ function PomodoroApp() {
 		restart,
 		switchMode,
 	} = usePomodoro();
-	const { minutes, seconds } = time;
+	const { hours, minutes, seconds } = time;
 	return (
 		<div className="max-w-md md:max-w-4xl w-full min-h-screen mx-auto p-4">
 			<div className="flex justify-between items-center">
@@ -50,7 +50,7 @@ function PomodoroApp() {
 			</div>
 
 			<div className="flex flex-col justify-center items-center gap-2">
-				<Timer minutes={minutes} seconds={seconds} mode={mode} />
+				<Timer hours={hours} minutes={minutes} seconds={seconds} mode={mode} />
 
 				{/* Controls */}
 				<div className="flex gap-2">

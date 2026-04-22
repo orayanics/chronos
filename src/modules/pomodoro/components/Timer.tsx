@@ -3,12 +3,13 @@ import type { POMODORO_TYPE } from "../schema";
 import { pad } from "../util";
 
 interface TimerProps {
+	hours: number;
 	minutes: number;
 	seconds: number;
 	mode: POMODORO_TYPE;
 }
 
-export default function Timer({ minutes, seconds, mode }: TimerProps) {
+export default function Timer({ hours, minutes, seconds, mode }: TimerProps) {
 	return (
 		<div style={{ textAlign: "center" }}>
 			<div
@@ -28,6 +29,8 @@ export default function Timer({ minutes, seconds, mode }: TimerProps) {
 					letterSpacing: "-0.03em",
 				}}
 			>
+				{pad(hours)}
+				<span style={{ opacity: 0.3 }}>:</span>
 				{pad(minutes)}
 				<span style={{ opacity: 0.3 }}>:</span>
 				{pad(seconds)}
