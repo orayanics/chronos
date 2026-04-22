@@ -1,8 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 
-import { Settings, Stats, Tasks, Timer } from "#/modules/pomodoro/components";
+import {
+	Settings,
+	ShareSession,
+	Stats,
+	Tasks,
+	Timer,
+} from "#/modules/pomodoro/components";
 
-import { DEFAULT_SESSION, LABEL_MAP, TYPES } from "#/modules/pomodoro/constant";
+import {
+	createDefaultSession,
+	LABEL_MAP,
+	TYPES,
+} from "#/modules/pomodoro/constant";
+import { canShareSession } from "#/modules/pomodoro/share";
 import usePomodoro from "#/modules/pomodoro/usePomodoro";
 import { duration, expiry, saveState } from "#/modules/pomodoro/util";
 
@@ -10,7 +22,7 @@ export const Route = createFileRoute("/pomodoro/")({
 	component: RouteComponent,
 });
 
-function PomodoroApp() {
+export function PomodoroApp() {
 	const {
 		settings,
 		session,
@@ -32,7 +44,9 @@ function PomodoroApp() {
 		restart,
 		switchMode,
 	} = usePomodoro();
+	const [showShare, setShowShare] = useState(false);
 	const { hours, minutes, seconds } = time;
+	const shareEnabled = canShareSession(session);
 	return (
 		<div className="max-w-md md:max-w-4xl w-full min-h-screen mx-auto p-4 space-y-6">
 			<div className="flex justify-between items-center">
@@ -107,6 +121,17 @@ function PomodoroApp() {
 					longBreaks={session.longBreaksCompleted}
 					total={session.logs}
 				/>
+
+				{shareEnabled && (
+					<button
+						type="button"
+						onClick={() => setShowShare(true)}
+						disabled={!shareEnabled}
+						className="cursor-pointer rounded-xl bg-primary px-4 py-2 text-sm text-secondary shadow-sm shadow-primary/35 transition hover:shadow-primary/50 disabled:cursor-not-allowed disabled:bg-primary/25 disabled:shadow-none"
+					>
+						Share Session
+					</button>
+				)}
 			</div>
 
 			<Tasks
@@ -115,6 +140,12 @@ function PomodoroApp() {
 				onToggle={toggleTask}
 				onDelete={deleteTask}
 				onUpdate={updateTask}
+			/>
+
+			<ShareSession
+				isOpen={showShare && shareEnabled}
+				session={session}
+				onClose={() => setShowShare(false)}
 			/>
 
 			<Settings
@@ -129,8 +160,10 @@ function PomodoroApp() {
 					restart(expiryT, false);
 				}}
 				onClearSession={() => {
-					setSession(DEFAULT_SESSION);
-					saveState("session", DEFAULT_SESSION);
+					const nextSession = createDefaultSession();
+					setSession(nextSession);
+					saveState("session", nextSession);
+					setShowShare(false);
 				}}
 			/>
 		</div>

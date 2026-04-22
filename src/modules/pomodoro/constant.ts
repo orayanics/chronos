@@ -11,14 +11,19 @@ export const DEFAULT_SETTINGS: PSettings = {
 	autoStartPomodoros: false,
 };
 
-export const DEFAULT_SESSION: PSessionState = {
-	pomodorosCompleted: 0,
-	shortBreaksCompleted: 0,
-	longBreaksCompleted: 0,
-	currentCycleCount: 0,
-	logs: [],
-	tasks: [],
-};
+export function createDefaultSession(): PSessionState {
+	return {
+		startedAt: Date.now(),
+		pomodorosCompleted: 0,
+		shortBreaksCompleted: 0,
+		longBreaksCompleted: 0,
+		currentCycleCount: 0,
+		logs: [],
+		tasks: [],
+	};
+}
+
+export const DEFAULT_SESSION: PSessionState = createDefaultSession();
 
 export const LABEL_MAP: Record<POMODORO_TYPE, string> = {
 	WORK: "FOCUS",

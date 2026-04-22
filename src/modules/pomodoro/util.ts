@@ -1,4 +1,9 @@
-import type { POMODORO_TYPE, PSessionLog, PSettings } from "./schema";
+import type {
+	POMODORO_TYPE,
+	PSessionLog,
+	PSessionState,
+	PSettings,
+} from "./schema";
 
 export function duration(mode: POMODORO_TYPE, s: PSettings): number {
 	if (mode === "WORK") return s.workMinutes;
@@ -20,7 +25,17 @@ export function pad(n: number) {
 }
 
 export function formatTime(logs: PSessionLog[]): string {
-	const totalMinutes = logs
+	const totalMinutes = getTotalFocusMinutes(logs);
+	const totalRounded = Math.round(totalMinutes * 100) / 100;
+	const hours = Math.floor(totalRounded / 60);
+	const minutes = totalRounded % 60;
+	if (hours > 0 && minutes > 0) return `${hours}h ${minutes}m`;
+	if (hours > 0) return `${hours}h`;
+	return `${minutes}m`;
+}
+
+export function getTotalFocusMinutes(logs: PSessionLog[]): number {
+	return logs
 		.filter((log) => log.type === "WORK")
 		.reduce((sum, log) => {
 			const dur =
@@ -29,12 +44,69 @@ export function formatTime(logs: PSessionLog[]): string {
 					: Number(log.duration);
 			return sum + (Number.isNaN(dur) ? 0 : dur);
 		}, 0);
-	const totalRounded = Math.round(totalMinutes * 100) / 100;
-	const hours = Math.floor(totalRounded / 60);
-	const minutes = totalRounded % 60;
-	if (hours > 0 && minutes > 0) return `${hours}h ${minutes}m`;
-	if (hours > 0) return `${hours}h`;
-	return `${minutes}m`;
+}
+
+export function hasCompletedWorkLog(logs: PSessionLog[]): boolean {
+	return logs.some((log) => log.type === "WORK");
+}
+
+export function formatSessionDate(timestamp: number): string {
+	return new Intl.DateTimeFormat(undefined, {
+		month: "short",
+		day: "numeric",
+		year: "numeric",
+	}).format(timestamp);
+}
+
+export function getSessionDateToken(timestamp: number): string {
+	return new Date(timestamp).toISOString().slice(0, 10);
+}
+
+export function normalizeSessionState(
+	session: Partial<PSessionState> | null | undefined,
+	fallbackStartedAt = Date.now(),
+): PSessionState {
+	const logs = Array.isArray(session?.logs) ? session.logs : [];
+	const tasks = Array.isArray(session?.tasks) ? session.tasks : [];
+	const firstWorkCompletedAt = logs
+		.filter(
+			(log): log is PSessionLog =>
+				Boolean(log) &&
+				log.type === "WORK" &&
+				typeof log.completedAt === "number" &&
+				Number.isFinite(log.completedAt),
+		)
+		.reduce<number | null>(
+			(earliest, log) =>
+				earliest === null ? log.completedAt : Math.min(earliest, log.completedAt),
+			null,
+		);
+
+	return {
+		startedAt:
+			typeof session?.startedAt === "number" &&
+			Number.isFinite(session.startedAt)
+				? session.startedAt
+				: firstWorkCompletedAt ?? fallbackStartedAt,
+		pomodorosCompleted:
+			typeof session?.pomodorosCompleted === "number"
+				? session.pomodorosCompleted
+				: 0,
+		shortBreaksCompleted:
+			typeof session?.shortBreaksCompleted === "number"
+				? session.shortBreaksCompleted
+				: 0,
+		longBreaksCompleted:
+			typeof session?.longBreaksCompleted === "number"
+				? session.longBreaksCompleted
+				: 0,
+		currentCycleCount:
+			typeof session?.currentCycleCount === "number"
+				? session.currentCycleCount
+				: 0,
+		logs,
+		tasks,
+	};
 }
 
 export function isAutoStart(mode: POMODORO_TYPE, settings: PSettings): boolean {
@@ -47,10 +119,12 @@ export function isAutoStart(mode: POMODORO_TYPE, settings: PSettings): boolean {
 
 // localStorage helpers
 export const loadState = <T>(key: string, defaultValue: T): T => {
+	if (typeof localStorage === "undefined") return defaultValue;
 	const stored = localStorage.getItem(key);
 	return stored ? JSON.parse(stored) : defaultValue;
 };
 
 export const saveState = <T>(key: string, value: T): void => {
+	if (typeof localStorage === "undefined") return;
 	localStorage.setItem(key, JSON.stringify(value));
 };

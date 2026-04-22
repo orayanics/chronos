@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { useTimer } from "react-timer-hook";
-import { DEFAULT_SESSION, DEFAULT_SETTINGS } from "#/modules/pomodoro/constant";
+import pkg from "react-timer-hook";
+
+const { useTimer } = pkg;
+
+import {
+	createDefaultSession,
+	DEFAULT_SETTINGS,
+} from "#/modules/pomodoro/constant";
 import type {
 	POMODORO_TYPE,
 	PSessionLog,
@@ -12,6 +18,7 @@ import {
 	expiry,
 	isAutoStart,
 	loadState,
+	normalizeSessionState,
 	saveState,
 } from "#/modules/pomodoro/util";
 
@@ -39,7 +46,10 @@ export default function usePomodoro() {
 		loadState("settings", DEFAULT_SETTINGS),
 	);
 	const [session, setSession] = useState<PSessionState>(() =>
-		loadState("session", DEFAULT_SESSION),
+		normalizeSessionState(
+			loadState<Partial<PSessionState> | null>("session", null),
+			createDefaultSession().startedAt,
+		),
 	);
 	const [mode, setMode] = useState<POMODORO_TYPE>(() =>
 		loadState<POMODORO_TYPE>("mode", "WORK"),

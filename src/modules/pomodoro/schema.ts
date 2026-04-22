@@ -23,6 +23,7 @@ export interface PSettings {
 }
 
 export interface PSessionState {
+	startedAt: number;
 	pomodorosCompleted: number;
 	shortBreaksCompleted: number;
 	longBreaksCompleted: number;
