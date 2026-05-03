@@ -1,0 +1,38 @@
+@reference '../globals.css';
+
+.input-time {
+  @apply w-16 px-2 py-1 border border-gray-300 rounded text-center focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-200 disabled:cursor-not-allowed;
+}
+
+.btn {
+  @apply shadow-sm px-2 py-1 text-sm rounded-lg transition-colors cursor-pointer;
+}
+
+.btn-work {
+  @apply shadow-pinkish/40 bg-pinkish/20 border-pinkish text-pinkish hover:inset-shadow-sm hover:inset-shadow-pinkish/40;
+}
+
+.btn-short {
+  @apply shadow-gold/40 bg-gold/20 border-gold text-gold hover:inset-shadow-sm hover:inset-shadow-gold/40;
+}
+
+.btn-long {
+  @apply shadow-sage/40 bg-sage/20 border-sage text-sage hover:inset-shadow-sm hover:inset-shadow-sage/40;
+}
+
+.btn-active {
+  @apply border-2;
+}
+
+/* State Buttons */
+.btn-default {
+  @apply cursor-pointer px-3 py-1 rounded-lg text-sm bg-primary text-secondary shadow-sm shadow-primary/40 hover:shadow-primary/60 transition-shadow;
+}
+
+.btn-running {
+  @apply bg-pinkish text-white shadow-rose-900 hover:inset-shadow-sm hover:inset-shadow-rose-900/60;
+}
+
+.btn-paused {
+  @apply bg-sage text-white shadow-emerald-900 hover:inset-shadow-sm hover:inset-shadow-emerald-900/60;
+}

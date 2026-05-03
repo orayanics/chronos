@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+:root {
+  --primary: #000d2b;
+  --secondary: #fdf6ea;
+
+  --pinkish: #e281b6;
+  --gold: #ffb12f;
+  --sage: #00735b;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-pinkish: var(--pinkish);
+  --color-gold: var(--gold);
+  --color-sage: var(--sage);
+}
+
+@layer utilities {
+  .pull-up {
+    @apply fixed bottom-0 left-0 right-0 z-30 transition-transform duration-300 ease-in-out transform;
+    @apply bg-white p-6 rounded-t-lg shadow-lg border mb-0;
+  }
+
+  .bg-blur {
+    @apply fixed inset-0 bg-black/30 backdrop-blur-[1px] z-20;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--primary);
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+/* Hide input number arrows */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
