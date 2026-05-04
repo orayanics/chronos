@@ -1,11 +1,11 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
 
-import { LABEL_FRIENDLY_MAP, LABEL_MAP, TYPES } from "../constants/pomodoro";
+import { LABEL_MAP, TYPES } from "../constants/pomodoro";
+import { useCountdown } from "../hooks/useCountdown";
 import type { InitialState, POMODORO_TYPE } from "../types/tpomodoro";
 import styles from "./Countdown.module.css";
+import Stats from "./Stats";
 
-type Status = "running" | "stopped" | "finished";
 type TimeParts = {
   hours: number;
   minutes: number;
@@ -33,6 +33,10 @@ function toTotalSeconds({ hours, minutes, seconds }: TimeParts) {
   return hours * 3600 + minutes * 60 + seconds;
 }
 
+function formatTwoDigits(value: number) {
+  return String(value).padStart(2, "0");
+}
+
 function getModeDuration(
   mode: POMODORO_TYPE,
   minutes: InitialState["settings"],
@@ -48,109 +52,22 @@ export default function Countdown({
   createSession,
   updateType,
 }: CountdownProps) {
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const remainingSecondsRef = useRef<number | null>(null);
-  const shouldAutoStartNextRef = useRef(false);
-  const [remainingSeconds, setRemainingSeconds] = useState<number | null>(null);
-  const [status, setStatus] = useState<Status>("stopped");
-
-  function clearTimer() {
-    if (!timerRef.current) return;
-
-    clearInterval(timerRef.current);
-    timerRef.current = null;
-  }
-
-  const startTimer = useCallback(
-    (nextRemainingSeconds: number) => {
-      if (timerRef.current || nextRemainingSeconds <= 0) return;
-
-      remainingSecondsRef.current = nextRemainingSeconds;
-      setRemainingSeconds(nextRemainingSeconds);
-      setStatus("running");
-
-      timerRef.current = setInterval(() => {
-        const currentTotalSeconds =
-          remainingSecondsRef.current ?? nextRemainingSeconds;
-
-        if (currentTotalSeconds <= 1) {
-          clearTimer();
-          remainingSecondsRef.current = null;
-          setRemainingSeconds(null);
-          setStatus("finished");
-          shouldAutoStartNextRef.current =
-            state.mode === "WORK"
-              ? state.settings.AUTO_START_BREAK
-              : state.settings.AUTO_START_WORK;
-          completeCurrentMode();
-          return;
-        }
-
-        const nextValue = currentTotalSeconds - 1;
-        remainingSecondsRef.current = nextValue;
-        setRemainingSeconds(nextValue);
-      }, 1000);
-    },
-    [completeCurrentMode, state.mode, state.settings],
-  );
-
-  function handleStart() {
-    startTimer(
-      remainingSeconds ??
-        toTotalSeconds(getModeDuration(state.mode, state.settings)),
-    );
-  }
-
-  function handleStop() {
-    clearTimer();
-    shouldAutoStartNextRef.current = false;
-    setStatus("stopped");
-  }
-
-  function handleReset() {
-    clearTimer();
-    shouldAutoStartNextRef.current = false;
-    remainingSecondsRef.current = null;
-    setRemainingSeconds(null);
-    setStatus("stopped");
-  }
-
-  function handleModeSelect(type: POMODORO_TYPE) {
-    if (status === "running") return;
-
-    updateType(type);
-    shouldAutoStartNextRef.current = false;
-    remainingSecondsRef.current = null;
-    setRemainingSeconds(null);
-    setStatus("stopped");
-  }
-
-  async function handleNewSession() {
-    clearTimer();
-    shouldAutoStartNextRef.current = false;
-    remainingSecondsRef.current = null;
-    setRemainingSeconds(null);
-    setStatus("stopped");
-    await createSession();
-  }
-
-  useEffect(() => clearTimer, []);
-
-  useEffect(() => {
-    if (!shouldAutoStartNextRef.current || status !== "finished") return;
-
-    shouldAutoStartNextRef.current = false;
-
-    const timer = window.setTimeout(() => {
-      startTimer(toTotalSeconds(getModeDuration(state.mode, state.settings)));
-    }, 0);
-
-    return () => window.clearTimeout(timer);
-  }, [startTimer, state.mode, state.settings, status]);
-
-  const isRunning = status === "running";
+  const {
+    displaySeconds,
+    isRunning,
+    handleModeSelect,
+    handleNewSession,
+    handleReset,
+    handleStart,
+    handleStop,
+  } = useCountdown({
+    state,
+    completeCurrentMode,
+    createSession,
+    updateType,
+  });
   const time = fromTotalSeconds(
-    remainingSeconds ??
+    displaySeconds ??
       toTotalSeconds(getModeDuration(state.mode, state.settings)),
   );
   const activeModeClass = {
@@ -161,9 +78,10 @@ export default function Countdown({
 
   return (
     <div className="space-y-4">
-      <div className="flex gap-2">
+      <div className="mx-auto flex justify-center gap-2">
         {TYPES.map((type) => (
           <button
+            type="button"
             key={type}
             onClick={() => handleModeSelect(type)}
             disabled={isRunning}
@@ -176,42 +94,43 @@ export default function Countdown({
         ))}
       </div>
 
-      <div>
-        <p className="text-sm font-medium">{LABEL_FRIENDLY_MAP[state.mode]}</p>
-        <div className="space-x-2">
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex items-center gap-2">
           <input
-            type="number"
-            value={time.hours}
+            type="text"
+            value={formatTwoDigits(time.hours)}
             readOnly
             className={styles["input-time"]}
           />
-          <span>:</span>
+
+          <p>:</p>
           <input
-            type="number"
-            value={time.minutes}
+            type="text"
+            value={formatTwoDigits(time.minutes)}
             readOnly
             className={styles["input-time"]}
           />
-          <span>:</span>
+          <p>:</p>
+
           <input
-            type="number"
-            value={time.seconds}
+            type="text"
+            value={formatTwoDigits(time.seconds)}
             readOnly
             className={styles["input-time"]}
           />
         </div>
       </div>
 
-      <div className="text-sm">
-        <p>Session #{state.session.id}</p>
-        <p>
-          Focus: {state.session.pomodoro_count} | Short:{" "}
-          {state.session.short_count} | Long: {state.session.long_count}
-        </p>
-      </div>
+      <Stats
+        total={state.session.logs}
+        pomodoros={state.session.pomodoro_count}
+        shortBreaks={state.session.short_count}
+        longBreaks={state.session.long_count}
+      />
 
-      <div className="space-x-2">
+      <div className="flex items-center justify-center gap-2">
         <button
+          type="button"
           onClick={handleStart}
           disabled={isRunning}
           className={`${styles["btn-default"]} ${styles["btn-running"]}`}
@@ -219,23 +138,36 @@ export default function Countdown({
           Start
         </button>
         <button
+          type="button"
           onClick={handleStop}
           disabled={!isRunning}
           className={`${styles["btn-default"]} ${styles["btn-paused"]}`}
         >
           Pause
         </button>
-        <button onClick={handleReset} className={styles["btn-default"]}>
-          Reset
-        </button>
         <button
+          type="button"
+          onClick={handleReset}
+          className={styles["btn-default"]}
+        >
+          Reset{" "}
+        </button>
+      </div>
+
+      <div className="flex items-center justify-center gap-2">
+        <button
+          type="button"
           onClick={onShareSession}
           disabled={!canShareSession}
           className={styles["btn-default"]}
         >
           Share Session
         </button>
-        <button onClick={handleNewSession} className={styles["btn-default"]}>
+        <button
+          type="button"
+          onClick={handleNewSession}
+          className={styles["btn-default"]}
+        >
           New session
         </button>
       </div>

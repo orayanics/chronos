@@ -29,7 +29,13 @@ export default function Settings({
 }: SettingsProps) {
   return (
     <>
-      {isOpen && <button type="button" className="bg-blur" onClick={onClose} />}
+      {isOpen && (
+        <button
+          type="button"
+          className={`${isOpen ? "bg-blur" : "backdrop-blur-none"} transition-all`}
+          onClick={onClose}
+        />
+      )}
 
       <section
         className={`pull-up ${isOpen ? "translate-y-0" : "translate-y-full"}`}

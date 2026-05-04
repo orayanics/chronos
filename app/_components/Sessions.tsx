@@ -1,6 +1,6 @@
 "use client";
-import { formatSessionDate } from "../utils/time";
 import type { SessionState } from "../types/tpomodoro";
+import { formatSessionDate } from "../utils/time";
 
 interface SessionsProps {
   currentSessionId: number;

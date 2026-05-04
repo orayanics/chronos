@@ -1,5 +1,6 @@
 "use client";
-import { useState, type FormEvent } from "react";
+import type { SubmitEvent } from "react";
+import { useState } from "react";
 
 import type { Task } from "../types/tpomodoro";
 
@@ -18,7 +19,7 @@ export default function Tasks({
 }: TasksProps) {
   const [draft, setDraft] = useState("");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!draft.trim()) return;
 
@@ -47,7 +48,9 @@ export default function Tasks({
       </form>
 
       {tasks.length === 0 ? (
-        <p className="text-sm text-primary/60">No tasks yet for this session.</p>
+        <p className="text-sm text-primary/60">
+          No tasks yet for this session.
+        </p>
       ) : (
         <ul className="space-y-2">
           {tasks.map((task) => (
@@ -61,7 +64,9 @@ export default function Tasks({
                   checked={task.completed}
                   onChange={() => toggleTask(task.id)}
                 />
-                <span className={task.completed ? "line-through opacity-60" : ""}>
+                <span
+                  className={task.completed ? "line-through opacity-60" : ""}
+                >
                   {task.text}
                 </span>
               </label>
