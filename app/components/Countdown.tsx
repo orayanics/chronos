@@ -6,6 +6,12 @@ import type { InitialState, POMODORO_TYPE } from "../types/tpomodoro";
 import styles from "./Countdown.module.css";
 import Stats from "./Stats";
 
+import {
+  AiFillPlayCircle,
+  AiFillPauseCircle,
+  AiOutlineReload,
+} from "react-icons/ai";
+
 type TimeParts = {
   hours: number;
   minutes: number;
@@ -71,13 +77,18 @@ export default function Countdown({
       toTotalSeconds(getModeDuration(state.mode, state.settings)),
   );
   const activeModeClass = {
-    WORK: styles["btn-work"],
-    SHORT_BREAK: styles["btn-short"],
-    LONG_BREAK: styles["btn-long"],
+    WORK: "btn-work",
+    SHORT_BREAK: "btn-short",
+    LONG_BREAK: "btn-long",
+  };
+  const actionIcons = {
+    START: <AiFillPlayCircle size={20} />,
+    PAUSE: <AiFillPauseCircle size={20} />,
+    RESET: <AiOutlineReload size={20} />,
   };
 
   return (
-    <div className="space-y-4">
+    <div className="h-screen flex flex-col justify-center items-center gap-4">
       <div className="mx-auto flex justify-center gap-2">
         {TYPES.map((type) => (
           <button
@@ -85,8 +96,8 @@ export default function Countdown({
             key={type}
             onClick={() => handleModeSelect(type)}
             disabled={isRunning}
-            className={`${styles.btn} ${activeModeClass[type]} ${
-              state.mode === type ? styles["btn-active"] : ""
+            className={`btn ${activeModeClass[type]} ${
+              state.mode === type ? "btn-active" : ""
             }`}
           >
             {LABEL_MAP[type]}
@@ -128,47 +139,43 @@ export default function Countdown({
         longBreaks={state.session.long_count}
       />
 
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-3">
         <button
           type="button"
           onClick={handleStart}
           disabled={isRunning}
-          className={`${styles["btn-default"]} ${styles["btn-running"]}`}
+          className="btn-default btn-running"
         >
-          Start
+          {actionIcons.START}
         </button>
         <button
           type="button"
           onClick={handleStop}
           disabled={!isRunning}
-          className={`${styles["btn-default"]} ${styles["btn-paused"]}`}
+          className="btn-default btn-paused"
         >
-          Pause
+          {actionIcons.PAUSE}
         </button>
-        <button
-          type="button"
-          onClick={handleReset}
-          className={styles["btn-default"]}
-        >
-          Reset{" "}
+        <button type="button" onClick={handleReset} className="btn-default">
+          {actionIcons.RESET}
         </button>
       </div>
 
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-3">
         <button
           type="button"
           onClick={onShareSession}
           disabled={!canShareSession}
-          className={styles["btn-default"]}
+          className="btn-default"
         >
           Share Session
         </button>
         <button
           type="button"
           onClick={handleNewSession}
-          className={styles["btn-default"]}
+          className="btn-default"
         >
-          New session
+          New Session
         </button>
       </div>
     </div>

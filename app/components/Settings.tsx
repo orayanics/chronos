@@ -29,22 +29,23 @@ export default function Settings({
 }: SettingsProps) {
   return (
     <>
-      {isOpen && (
-        <button
-          type="button"
-          className={`${isOpen ? "bg-blur" : "backdrop-blur-none"} transition-all`}
-          onClick={onClose}
-        />
-      )}
+      <button
+        type="button"
+        className={`${isOpen ? "bg-blur" : "backdrop-blur-none bg-none"} transition-all`}
+        onClick={onClose}
+      />
 
       <section
-        className={`pull-up ${isOpen ? "translate-y-0" : "translate-y-full"}`}
+        className={`pull-up space-y-2 ${isOpen ? "translate-y-0" : "translate-y-full"}`}
       >
-        <h2 className="text-lg font-semibold">Settings</h2>
+        <div className="border-b border-gray-300 pb-3">
+          <h2 className="text-lg font-semibold">Settings</h2>
+          <p className="text-gray-600">Time is computed by minutes.</p>
+        </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="flex flex-col gap-1">
-            <span>Work minutes</span>
+            <span className="text-label">Work</span>
             <input
               type="number"
               min="1"
@@ -52,12 +53,12 @@ export default function Settings({
               onChange={(e) =>
                 updateSettings("WORK", clampNumber(e.target.value))
               }
-              className="rounded border border-gray-300 px-3 py-2"
+              className="input"
             />
           </label>
 
           <label className="flex flex-col gap-1">
-            <span>Short break minutes</span>
+            <span className="text-label">Short Break</span>
             <input
               type="number"
               min="1"
@@ -65,12 +66,12 @@ export default function Settings({
               onChange={(e) =>
                 updateSettings("SHORT_BREAK", clampNumber(e.target.value))
               }
-              className="rounded border border-gray-300 px-3 py-2"
+              className="input"
             />
           </label>
 
           <label className="flex flex-col gap-1">
-            <span>Long break minutes</span>
+            <span className="text-label">Long Break</span>
             <input
               type="number"
               min="1"
@@ -78,12 +79,12 @@ export default function Settings({
               onChange={(e) =>
                 updateSettings("LONG_BREAK", clampNumber(e.target.value))
               }
-              className="rounded border border-gray-300 px-3 py-2"
+              className="input"
             />
           </label>
 
           <label className="flex flex-col gap-1">
-            <span>Cycles before long break</span>
+            <span className="text-label">Cycles before long break</span>
             <input
               type="number"
               min="1"
@@ -94,7 +95,7 @@ export default function Settings({
                   clampNumber(e.target.value),
                 )
               }
-              className="rounded border border-gray-300 px-3 py-2"
+              className="input"
             />
           </label>
         </div>
@@ -107,6 +108,7 @@ export default function Settings({
               onChange={(e) =>
                 updateSettings("AUTO_START_BREAK", e.target.checked)
               }
+              className="checkbox"
             />
             <span>Auto start break</span>
           </label>
@@ -118,6 +120,7 @@ export default function Settings({
               onChange={(e) =>
                 updateSettings("AUTO_START_WORK", e.target.checked)
               }
+              className="checkbox"
             />
             <span>Auto start work</span>
           </label>

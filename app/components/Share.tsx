@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-
 import type { SessionState } from "../types/tpomodoro";
 import { exportElementAsPng, getShareSessionData } from "../hooks/useShare";
 
@@ -53,7 +52,7 @@ export default function ShareSession({
 			z-30 flex items-center justify-center mb-0 transition-opacity duration-300 ease-in-out
 			${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
-        <div className="max-w-md rounded-lg bg-secondary p-10 space-y-4">
+        <div className="max-w-md rounded-lg bg-white p-10 space-y-4">
           <div className="text-center">
             <p className="text-xs uppercase tracking-[0.3em] text-primary/50">
               Share Session
