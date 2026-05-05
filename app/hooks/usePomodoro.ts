@@ -16,15 +16,15 @@ import type {
   Task,
 } from "../types/tpomodoro";
 
-const DB_NAME = "chronos-db";
-const DB_VERSION = 2;
-const CURRENT_STATE_KEY = "current";
+export const DB_NAME = "chronos-db";
+export const DB_VERSION = 2;
+export const CURRENT_STATE_KEY = "current";
 
 type LegacySessionState = SessionState & {
-  long_coiunt?: number;
+  long_count?: number;
 };
 
-interface ChronosDB extends DBSchema {
+export interface ChronosDB extends DBSchema {
   sessions: {
     key: number;
     value: SessionState;
@@ -42,13 +42,15 @@ function normalizeSession(session: Partial<LegacySessionState> | undefined) {
     ...fallback,
     ...session,
     startedAt: session?.startedAt ?? fallback.startedAt,
-    long_count: session?.long_count ?? session?.long_coiunt ?? 0,
+    long_count: session?.long_count ?? session?.long_count ?? 0,
     logs: session?.logs ?? [],
     tasks: session?.tasks ?? [],
   } satisfies SessionState;
 }
 
-function normalizeState(state: Partial<InitialState> | undefined): InitialState {
+function normalizeState(
+  state: Partial<InitialState> | undefined,
+): InitialState {
   const fallback = getDefaultState();
 
   return {
@@ -61,7 +63,7 @@ function normalizeState(state: Partial<InitialState> | undefined): InitialState 
   };
 }
 
-async function getDatabase() {
+export async function getDatabase() {
   return openDB<ChronosDB>(DB_NAME, DB_VERSION, {
     upgrade(db) {
       if (!db.objectStoreNames.contains("sessions")) {
@@ -113,7 +115,9 @@ export function usePomodoro() {
         if (savedCurrentState?.state) {
           const normalizedState = normalizeState(savedCurrentState.state);
           const allSessions = sortSessions(
-            (await db.getAll("sessions")).map((session) => normalizeSession(session)),
+            (await db.getAll("sessions")).map((session) =>
+              normalizeSession(session),
+            ),
           );
           const savedSession = allSessions.find(
             (session) => session.id === normalizedState.session.id,
@@ -126,7 +130,9 @@ export function usePomodoro() {
         }
 
         const allSessions = sortSessions(
-          (await db.getAll("sessions")).map((session) => normalizeSession(session)),
+          (await db.getAll("sessions")).map((session) =>
+            normalizeSession(session),
+          ),
         );
 
         if (allSessions.length > 0) {
@@ -185,7 +191,10 @@ export function usePomodoro() {
     setState((prev) => ({ ...prev, mode: type }));
   }
 
-  function updateSettings<K extends keyof Settings>(key: K, value: Settings[K]) {
+  function updateSettings<K extends keyof Settings>(
+    key: K,
+    value: Settings[K],
+  ) {
     setState((prev) => ({
       ...prev,
       settings: {
@@ -297,7 +306,9 @@ export function usePomodoro() {
   }
 
   function selectSession(sessionId: number) {
-    const selectedSession = sessions.find((session) => session.id === sessionId);
+    const selectedSession = sessions.find(
+      (session) => session.id === sessionId,
+    );
     if (!selectedSession) return;
 
     sessionInHistoryRef.current = true;
@@ -312,7 +323,9 @@ export function usePomodoro() {
     try {
       await deleteStoredSession(sessionId);
 
-      const remainingSessions = sessions.filter((session) => session.id !== sessionId);
+      const remainingSessions = sessions.filter(
+        (session) => session.id !== sessionId,
+      );
       const normalizedSessions = sortSessions(remainingSessions);
       setSessions(normalizedSessions);
 

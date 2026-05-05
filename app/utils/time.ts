@@ -37,3 +37,18 @@ export function getTotalFocusMinutes(logs: Log[]): number {
       return sum + (Number.isNaN(dur) ? 0 : dur);
     }, 0);
 }
+
+export function formatLogTime(timestamp: number) {
+  return new Intl.DateTimeFormat(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(timestamp);
+}
+
+export function isSameDay(left: Date, right: Date) {
+  return (
+    left.getFullYear() === right.getFullYear() &&
+    left.getMonth() === right.getMonth() &&
+    left.getDate() === right.getDate()
+  );
+}
