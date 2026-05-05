@@ -11,7 +11,6 @@ import Settings from "./components/Settings";
 import { canShareSession } from "./hooks/useShare";
 import { usePomodoro } from "./hooks/usePomodoro";
 
-import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 
 export default function Home() {
@@ -37,9 +36,7 @@ export default function Home() {
 
   return (
     <>
-      <Nav />
-
-      <div className="h-screen overflow-hidden mx-auto w-full max-w-4xl px-4">
+      <div className="h-screen mx-auto w-100 max-w-4xl px-4">
         {isLoaded ? (
           <>
             <Countdown

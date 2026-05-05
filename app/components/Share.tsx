@@ -47,21 +47,13 @@ export default function ShareSession({
           onClick={onClose}
         />
       )}
+
       <div
         className={`w-100 absolute inset-0 left-0 right-0 top-0 mx-auto my-auto
 			z-30 flex items-center justify-center mb-0 transition-opacity duration-300 ease-in-out
 			${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
-        <div className="max-w-md rounded-lg bg-white p-10 space-y-4">
-          <div className="text-center">
-            <p className="text-xs uppercase tracking-[0.3em] text-primary/50">
-              Share Session
-            </p>
-            <p className="text-sm text-primary/75">
-              Save your Chronos recap as a PNG card.
-            </p>
-          </div>
-
+        <div className="max-w-md rounded-lg bg-white p-4 space-y-4">
           <div className="overflow-x-auto pb-2">
             <div
               ref={cardRef}

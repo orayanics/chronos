@@ -18,8 +18,8 @@ export const DEFAULT_SETTINGS: Settings = {
 
 export const LABEL_MAP: Record<POMODORO_TYPE, string> = {
   WORK: "FOCUS",
-  SHORT_BREAK: "SHORT BREAK",
-  LONG_BREAK: "LONG BREAK ",
+  SHORT_BREAK: "SHORT",
+  LONG_BREAK: "LONG",
 };
 
 export const LABEL_FRIENDLY_MAP: Record<POMODORO_TYPE, string> = {
