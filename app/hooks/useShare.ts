@@ -10,6 +10,7 @@ import {
 
 export interface ShareSessionData {
   cycleCount: number;
+  tasksCompleted: number;
   focusLabel: string;
   sessionDateLabel: string;
   sessionDateToken: string;
@@ -26,6 +27,7 @@ export function getShareSessionData(
 
   return {
     cycleCount: session.currentCycleCount,
+    tasksCompleted: session.tasks.filter((t) => t.completed).length,
     focusLabel: formatTime(session.logs),
     sessionDateLabel: formatSessionDate(session.startedAt),
     sessionDateToken: getSessionDateToken(session.startedAt),

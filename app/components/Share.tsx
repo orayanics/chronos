@@ -43,7 +43,7 @@ export default function ShareSession({
       {isOpen && (
         <button
           type="button"
-          className="fixed inset-0 z-20 bg-black/30 backdrop-blur-xs mb-0"
+          className="fixed inset-0 z-20 bg-black/20 backdrop-blur-xs mb-0"
           onClick={onClose}
         />
       )}
@@ -53,53 +53,61 @@ export default function ShareSession({
 			z-30 flex items-center justify-center mb-0 transition-opacity duration-300 ease-in-out
 			${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
       >
-        <div className="max-w-md rounded-lg bg-white p-4 space-y-4">
+        <div className="max-w-md bg-white p-4 space-y-4">
           <div className="overflow-x-auto pb-2">
             <div
               ref={cardRef}
-              className="mx-auto relative h-142 w-[320px] overflow-hidden
-							border-2 border-secondary shadow-sm
-							rounded-lg bg-secondary text-primary/75 text-shadow-lg"
+              className="mx-auto relative h-[80svh] w-[320px] overflow-hidden
+							border-2 border-secondary
+							bg-secondary text-primary/75"
             >
-              <div className="absolute inset-0 bg-primary/10 blur-3xl" />
-              <div className="absolute inset-0 h-36 w-36 bg-sage blur-3xl" />
-              <div className="absolute -right-10 top-24 h-36 w-36 rounded-full bg-pinkish blur-3xl" />
-              <div className="absolute -left-12 bottom-18 h-40 w-40 rounded-full bg-gold blur-3xl" />
+              <div className="absolute inset-0 bg-primary/15 blur-3xl" />
+              <div className="absolute inset-0 h-50 w-50 bg-sage blur-3xl" />
+              <div className="absolute -right-10 top-24 h-70 w-60 rounded-full bg-pinkish blur-3xl" />
+              <div className="absolute left-10 -bottom-10 h-60 w-70 rounded-full bg-gold blur-3xl" />
+              <div
+                className={`absolute inset-0 z-0 mx-auto left-0 -right-18 text-right
+              text-primary text-[32rem] leading-none
+              ${isOpen ? "animate-spin-up" : ""}`}
+              >
+                *
+              </div>
 
               <div className="relative flex h-full flex-col justify-between p-7">
-                <div>
-                  <p className="text-lg uppercase mb-6 tracking-widest">
-                    Chronos
-                  </p>
-                  <div className="space-y-2">
-                    <p className="text-sm uppercase tracking-widest">
+                <div className="text-secondary">
+                  <p className="font-black text-3xl uppercase mb-6">Chronos</p>
+                  <div>
+                    <p className="font-semibold text-sm uppercase tracking-widest">
                       Session Focus
                     </p>
-                    <p className="text-6xl font-bold leading-none">
+                    <p className="text-8xl font-bold leading-none">
                       {shareData.focusLabel}
                     </p>
-                    <p className="max-w-56 text-sm">
-                      minutes of focused work for this session!
-                    </p>
+                  </div>
+
+                  <p className="font-semibold mt-10 -mb-4">STATS</p>
+                  <div className="grid grid-cols-2 text-secondary">
+                    <div>
+                      <p className="mt-3 text-7xl font-bold">
+                        {shareData.cycleCount}
+                      </p>
+                      <p className="text-sm uppercase font-bold">Cycles</p>
+                    </div>
+
+                    <div>
+                      <p className="mt-3 text-7xl font-bold">
+                        {shareData.tasksCompleted}
+                      </p>
+                      <p className="text-sm uppercase font-bold">Tasks</p>
+                    </div>
                   </div>
                 </div>
 
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <p className="text-xs uppercase">Cycles</p>
-                      <p className="mt-3 text-4xl font-bold">
-                        {shareData.cycleCount}
-                      </p>
-                    </div>
-
-                    <div>
-                      <p className="text-xs uppercase">Date</p>
-                      <p className="mt-3 text-2xl font-bold leading-tight">
-                        {shareData.sessionDateLabel}
-                      </p>
-                    </div>
-                  </div>
+                <div className="text-secondary">
+                  <p className="text-xs uppercase">Date</p>
+                  <p className="text-2xl font-bold leading-tight">
+                    {shareData.sessionDateLabel}
+                  </p>
                 </div>
               </div>
             </div>
@@ -109,20 +117,20 @@ export default function ShareSession({
             <p className="text-center text-sm text-red-400">{error}</p>
           ) : null}
 
-          <div className="gap-4 flex justify-center">
+          <div className="gap-2 flex justify-center">
             <button
               type="button"
               onClick={handleDownload}
               disabled={isSaving}
-              className="cursor-pointer rounded-lg bg-primary px-4 py-3 text-sm text-secondary shadow-sm shadow-primary/30 transition hover:shadow-primary/45 disabled:cursor-not-allowed disabled:opacity-60"
+              className="btn btn-work"
             >
-              {isSaving ? "Saving..." : "Save PNG"}
+              {isSaving ? "Saving" : "Save"}
             </button>
 
             <button
               type="button"
               onClick={onClose}
-              className="cursor-pointer rounded-lg border border-primary/15 px-4 py-3 text-sm text-primary/75 transition hover:bg-primary/5"
+              className="btn-default text-sm"
             >
               Cancel
             </button>

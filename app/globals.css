@@ -178,6 +178,24 @@
   .topo-map-wrap[data-mode="LONG_BREAK"] {
     --topo-color: var(--sage);
   }
+
+  .animate-spin-up {
+    animation: spin-up-rotate 1s cubic-bezier(0.4, 0, 0.2, 1);
+    animation-fill-mode: both;
+  }
+}
+
+@keyframes spin-up-rotate {
+  from {
+    opacity: 0;
+    font-size: 5rem;
+    transform: rotate(360deg);
+  }
+  to {
+    opacity: 1;
+    font-size: 40rem;
+    transform: rotate(-10deg);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
