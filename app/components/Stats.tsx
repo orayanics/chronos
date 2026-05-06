@@ -17,7 +17,7 @@ export default function Stats({
   const data = total ?? [];
   return (
     <div className="space-y-2 w-full">
-      <p className="text-center text-xs text-primary/60">STATS</p>
+      <p className="text-center text-xs text-primary/60">CURRENT SESSION</p>
       <div className="grid grid-cols-3 gap-2">
         <div
           className="rounded-lg p-2 bg-sage text-center
@@ -58,7 +58,7 @@ export default function Stats({
 
       {data.length > 0 && (
         <div
-          className="rounded-lg p-4 bg-primary/5
+          className="rounded-lg p-2 bg-primary/5
 				shadow-sm shadow-primary/20 inset-shadow-sm inset-shadow-primary/20"
         >
           <p className="text-sm text-center text-primary/80">

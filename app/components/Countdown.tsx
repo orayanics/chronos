@@ -1,10 +1,9 @@
 "use client";
 
-import { LABEL_MAP, TYPES } from "../constants/pomodoro";
+import { LABEL_FRIENDLY_MAP, LABEL_MAP, TYPES } from "../constants/pomodoro";
 import { useCountdown } from "../hooks/useCountdown";
 import type { InitialState, POMODORO_TYPE } from "../types/tpomodoro";
 import styles from "./Countdown.module.css";
-import Stats from "./Stats";
 
 import {
   AiFillPlayCircle,
@@ -82,13 +81,26 @@ export default function Countdown({
     LONG_BREAK: "btn-long",
   };
   const actionIcons = {
-    START: <AiFillPlayCircle size={20} />,
+    START: <AiFillPlayCircle size={32} />,
     PAUSE: <AiFillPauseCircle size={20} />,
     RESET: <AiOutlineReload size={20} />,
   };
+  const modeLabelClass = {
+    WORK: "text-focus",
+    SHORT_BREAK: "text-short-break",
+    LONG_BREAK: "text-long-break",
+  };
+  // const totalDurationSeconds = toTotalSeconds(
+  //   getModeDuration(state.mode, state.settings),
+  // );
+
+  // const progress = Math.max(totalDurationSeconds - displaySeconds, 0);
 
   return (
     <div className="h-screen flex flex-col justify-center items-center gap-4">
+      <div className={`text-message ${modeLabelClass[state.mode]}`}>
+        {LABEL_FRIENDLY_MAP[state.mode]}
+      </div>
       <div className="mx-auto flex justify-center gap-2">
         {TYPES.map((type) => (
           <button
@@ -105,16 +117,20 @@ export default function Countdown({
         ))}
       </div>
 
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center my-2">
         <div className="flex items-center gap-2">
-          <input
-            type="text"
-            value={formatTwoDigits(time.hours)}
-            readOnly
-            className={styles["input-time"]}
-          />
+          {time.hours > 0 && (
+            <>
+              <input
+                type="text"
+                value={formatTwoDigits(time.hours)}
+                readOnly
+                className={styles["input-time"]}
+              />
+              <p>:</p>
+            </>
+          )}
 
-          <p>:</p>
           <input
             type="text"
             value={formatTwoDigits(time.minutes)}
@@ -132,14 +148,15 @@ export default function Countdown({
         </div>
       </div>
 
-      <Stats
-        total={state.session.logs}
-        pomodoros={state.session.pomodoro_count}
-        shortBreaks={state.session.short_count}
-        longBreaks={state.session.long_count}
-      />
-
       <div className="flex items-center justify-center gap-3">
+        <button
+          type="button"
+          onClick={handleStop}
+          disabled={!isRunning}
+          className="btn-default"
+        >
+          {actionIcons.PAUSE}
+        </button>
         <button
           type="button"
           onClick={handleStart}
@@ -148,35 +165,32 @@ export default function Countdown({
         >
           {actionIcons.START}
         </button>
-        <button
-          type="button"
-          onClick={handleStop}
-          disabled={!isRunning}
-          className="btn-default btn-paused"
-        >
-          {actionIcons.PAUSE}
-        </button>
         <button type="button" onClick={handleReset} className="btn-default">
           {actionIcons.RESET}
         </button>
       </div>
 
       <div className="flex items-center justify-center gap-3">
-        <button
-          type="button"
-          onClick={onShareSession}
-          disabled={!canShareSession}
-          className="btn-default"
-        >
-          Share Session
-        </button>
-        <button
-          type="button"
-          onClick={handleNewSession}
-          className="btn-default"
-        >
-          New Session
-        </button>
+        <div className="flex flex-col items-center justify-center">
+          <button
+            type="button"
+            onClick={onShareSession}
+            disabled={!canShareSession}
+            className="btn-default text-xs!"
+          >
+            <p>Share</p>
+          </button>
+        </div>
+
+        <div className="flex flex-col items-center justify-center">
+          <button
+            type="button"
+            onClick={handleNewSession}
+            className="btn-default text-xs!"
+          >
+            <p>New</p>
+          </button>
+        </div>
       </div>
     </div>
   );

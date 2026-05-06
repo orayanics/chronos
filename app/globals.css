@@ -28,7 +28,7 @@
   }
 
   .btn {
-    @apply border border-gray-300 shadow-sm px-2 py-2 text-sm rounded-lg transition-colors cursor-pointer;
+    @apply shadow-sm px-2 py-2 text-sm rounded-lg transition-colors cursor-pointer;
   }
 
   .btn-work {
@@ -54,7 +54,7 @@
   }
 
   .btn-running {
-    @apply bg-pinkish text-white shadow-rose-900 hover:inset-shadow-sm hover:inset-shadow-rose-900/60;
+    @apply bg-pinkish text-white shadow-rose-900 hover:inset-shadow-sm hover:inset-shadow-rose-900/60 w-fit h-auto flex justify-center items-center;
   }
 
   .btn-paused {
@@ -88,6 +88,20 @@
     button {
       @apply border-sage font-semibold;
     }
+  }
+
+  /* Text Colors */
+  .text-message {
+    @apply font-bold font-mono;
+  }
+  .text-focus {
+    @apply text-pinkish;
+  }
+  .text-short-break {
+    @apply text-gold;
+  }
+  .text-long-break {
+    @apply text-sage;
   }
 }
 
