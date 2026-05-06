@@ -1,6 +1,6 @@
 import type {
-  POMODORO_TYPE,
   InitialState,
+  POMODORO_TYPE,
   SessionState,
   Settings,
 } from "../types/tpomodoro";
@@ -23,9 +23,9 @@ export const LABEL_MAP: Record<POMODORO_TYPE, string> = {
 };
 
 export const LABEL_FRIENDLY_MAP: Record<POMODORO_TYPE, string> = {
-  WORK: "Time to Focus!",
-  SHORT_BREAK: "Take a short break",
-  LONG_BREAK: "Take a long break",
+  WORK: "Time to Focus",
+  SHORT_BREAK: "That's a break",
+  LONG_BREAK: "Time for a breather",
 };
 
 export function createNewSessionState(): SessionState {

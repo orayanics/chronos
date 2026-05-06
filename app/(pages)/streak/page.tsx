@@ -47,7 +47,7 @@ export default function Page() {
     : undefined;
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-4xl flex-col gap-6 px-4 py-8">
+    <div className="mx-auto flex min-h-svh w-full max-w-4xl flex-col gap-6 px-4 py-8">
       <div className="h-full grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="border">
           <DayPicker

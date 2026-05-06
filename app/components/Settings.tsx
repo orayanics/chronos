@@ -31,12 +31,12 @@ export default function Settings({
     <>
       <button
         type="button"
-        className={`${isOpen ? "bg-blur" : "backdrop-blur-none bg-none"} transition-all`}
+        className={`${isOpen ? "bg-blur" : "bg-none backdrop-blur-none"}`}
         onClick={onClose}
       />
 
       <section
-        className={`pull-up space-y-2 ${isOpen ? "translate-y-0" : "translate-y-full"}`}
+        className={`pull-up space-y-2 ${isOpen ? "translate-y-0" : "translate-y-full"} backdrop-blur-lg`}
       >
         <div className="border-b border-gray-300 pb-3">
           <h2 className="text-lg font-semibold">Settings</h2>

@@ -23,7 +23,7 @@ export default function Sessions({
     <>
       <button
         type="button"
-        className={`${isOpen ? "bg-blur" : "backdrop-blur-none bg-none"} transition-all`}
+        className={`${isOpen ? "bg-blur" : "backdrop-blur-none bg-none"}`}
         onClick={onClose}
       />
 
@@ -49,19 +49,32 @@ export default function Sessions({
                     onClick={() => selectSession(session.id)}
                     className="flex-1 cursor-pointer text-left"
                   >
-                    <p className="font-medium">
+                    <p className="font-semibold uppercase text-xs tracking-widest mb-2">
                       {isCurrent ? "Current session" : "Open session"}
                     </p>
-                    <p className="text-sm text-primary/65">
-                      {formatSessionDate(session.startedAt)} • Focus{" "}
-                      {session.pomodoro_count} • Tasks {session.tasks.length}
-                    </p>
+
+                    <div className="font-bold uppercase">
+                      <p>{formatSessionDate(session.startedAt)}</p>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <p
+                        className={`${isCurrent ? "session-focus" : ""} text-xs`}
+                      >
+                        Focus <span>{session.pomodoro_count}</span>
+                      </p>
+                      <p
+                        className={`${isCurrent ? "session-tasks" : ""} text-xs`}
+                      >
+                        Tasks <span>{session.tasks.length}</span>
+                      </p>
+                    </div>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => deleteSession(session.id)}
-                    className="btn"
+                    className="btn-default text-xs"
                   >
                     Delete
                   </button>

@@ -1,6 +1,6 @@
 @reference '../globals.css';
 
 .input-time {
-  @apply tabular-nums text-center text-8xl max-w-[5ch] w-full bg-transparent border-none;
+  @apply text-center text-8xl w-full font-black bg-transparent border-none;
   @apply focus:outline-none focus:border-none focus:ring-0 cursor-default;
 }

@@ -36,7 +36,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="h-screen mx-auto w-100 max-w-4xl px-4">
+      <div className="relative h-svh">
         {isLoaded ? (
           <>
             <Countdown

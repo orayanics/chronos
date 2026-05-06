@@ -1,4 +1,5 @@
-import { FaCog, FaClock, FaThList } from "react-icons/fa";
+import { FaClock, FaCog, FaThList } from "react-icons/fa";
+
 interface FooterProps {
   setIsSettingsOpen: (isOpen: boolean) => void;
   setIsSessionsOpen: (isOpen: boolean) => void;
@@ -11,15 +12,17 @@ export default function Footer({
   setIsTasksOpen,
 }: FooterProps) {
   return (
-    <footer className="fixed bottom-0 w-full text-center bg-white border-t border-gray-300 py-2 space-x-3">
-      <div className="flex items-center justify-center gap-4">
+    <footer className="fixed bottom-0 w-full mx-a text-center py-2 space-x-3">
+      <div
+        className="flex items-center justify-center gap-4 mx-auto
+      bg-gray-50 w-fit px-4 py-2 border border-gray-200"
+      >
         <button
           type="button"
           className="btn shadow-none! hover:text-pinkish"
           onClick={() => setIsSettingsOpen(true)}
         >
           <FaCog className="inline-block" />
-          <p className="text-xs">Settings</p>
         </button>
 
         <button
@@ -28,7 +31,6 @@ export default function Footer({
           onClick={() => setIsSessionsOpen(true)}
         >
           <FaClock className="inline-block" />
-          <p className="text-xs">Sessions</p>
         </button>
 
         <button
@@ -37,7 +39,6 @@ export default function Footer({
           onClick={() => setIsTasksOpen(true)}
         >
           <FaThList className="inline-block" />
-          <p className="text-xs">Tasks</p>
         </button>
       </div>
     </footer>

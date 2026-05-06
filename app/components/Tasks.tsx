@@ -35,7 +35,7 @@ export default function Tasks({
     <>
       <button
         type="button"
-        className={`${isOpen ? "bg-blur" : "backdrop-blur-none bg-none"} transition-all`}
+        className={`${isOpen ? "bg-blur" : "backdrop-blur-none bg-none"}`}
         onClick={onClose}
       />
 
@@ -50,12 +50,9 @@ export default function Tasks({
             value={draft}
             onChange={(event) => setDraft(event.target.value)}
             placeholder="Add a task for this session"
-            className="flex-1 rounded border border-gray-300 px-3 py-2"
+            className="input w-full"
           />
-          <button
-            type="submit"
-            className="cursor-pointer rounded-lg bg-primary px-4 py-2 text-secondary"
-          >
+          <button type="submit" className="btn-default">
             Add
           </button>
         </form>
@@ -87,7 +84,7 @@ export default function Tasks({
                 <button
                   type="button"
                   onClick={() => deleteTask(task.id)}
-                  className="cursor-pointer text-sm text-primary/60 transition hover:text-primary"
+                  className="cursor-pointer py-2 text-xs"
                 >
                   Delete
                 </button>

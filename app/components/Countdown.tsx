@@ -4,6 +4,7 @@ import { LABEL_FRIENDLY_MAP, LABEL_MAP, TYPES } from "../constants/pomodoro";
 import { useCountdown } from "../hooks/useCountdown";
 import type { InitialState, POMODORO_TYPE } from "../types/tpomodoro";
 import styles from "./Countdown.module.css";
+import TopoMap from "./TopoMap";
 
 import {
   AiFillPlayCircle,
@@ -71,9 +72,14 @@ export default function Countdown({
     createSession,
     updateType,
   });
-  const time = fromTotalSeconds(
-    displaySeconds ??
-      toTotalSeconds(getModeDuration(state.mode, state.settings)),
+  const totalDurationSeconds = toTotalSeconds(
+    getModeDuration(state.mode, state.settings),
+  );
+  const remainingSeconds = displaySeconds ?? totalDurationSeconds;
+  const time = fromTotalSeconds(remainingSeconds);
+  const progress = Math.min(
+    1,
+    Math.max(0, 1 - remainingSeconds / totalDurationSeconds),
   );
   const activeModeClass = {
     WORK: "btn-work",
@@ -97,7 +103,8 @@ export default function Countdown({
   // const progress = Math.max(totalDurationSeconds - displaySeconds, 0);
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center gap-4">
+    <div className="h-svh flex flex-col justify-center items-center gap-4">
+      <TopoMap mode={state.mode} progress={progress} />
       <div className={`text-message ${modeLabelClass[state.mode]}`}>
         {LABEL_FRIENDLY_MAP[state.mode]}
       </div>
@@ -109,7 +116,7 @@ export default function Countdown({
             onClick={() => handleModeSelect(type)}
             disabled={isRunning}
             className={`btn ${activeModeClass[type]} ${
-              state.mode === type ? "btn-active" : ""
+              state.mode === type ? "btn-active" : "btn-inactive"
             }`}
           >
             {LABEL_MAP[type]}
@@ -118,33 +125,24 @@ export default function Countdown({
       </div>
 
       <div className="flex flex-col justify-center items-center my-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center">
           {time.hours > 0 && (
             <>
-              <input
-                type="text"
-                value={formatTwoDigits(time.hours)}
-                readOnly
-                className={styles["input-time"]}
-              />
-              <p>:</p>
+              <span className={styles["input-time"]}>
+                {formatTwoDigits(time.hours)}
+              </span>
+              <p className="text-5xl font-bold">:</p>
             </>
           )}
 
-          <input
-            type="text"
-            value={formatTwoDigits(time.minutes)}
-            readOnly
-            className={styles["input-time"]}
-          />
-          <p>:</p>
+          <span className={styles["input-time"]}>
+            {formatTwoDigits(time.minutes)}
+          </span>
+          <p className="text-5xl font-bold">:</p>
 
-          <input
-            type="text"
-            value={formatTwoDigits(time.seconds)}
-            readOnly
-            className={styles["input-time"]}
-          />
+          <span className={styles["input-time"]}>
+            {formatTwoDigits(time.seconds)}
+          </span>
         </div>
       </div>
 

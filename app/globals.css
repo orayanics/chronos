@@ -19,37 +19,41 @@
 
 @layer utilities {
   .pull-up {
-    @apply fixed bottom-0 left-0 right-0 z-30 transition-transform duration-300 ease-in-out transform;
-    @apply bg-white p-6 rounded-t-lg shadow-lg mb-0;
+    @apply fixed bottom-0 left-0 right-0 z-30! transition-transform duration-300 ease-in-out transform;
+    @apply bg-white p-6 shadow-lg mb-0;
   }
 
   .bg-blur {
-    @apply fixed inset-0 bg-black/30 backdrop-blur-[1px] z-20;
+    @apply fixed inset-0 bg-black/30 backdrop-blur-[1px] z-20 transition-all;
   }
 
   .btn {
-    @apply shadow-sm px-2 py-2 text-sm rounded-lg transition-colors cursor-pointer;
+    @apply shadow-sm px-2 py-2 text-sm transition-colors cursor-pointer;
   }
 
   .btn-work {
-    @apply shadow-pinkish/40 bg-pinkish/20 border-pinkish text-pinkish hover:inset-shadow-sm hover:inset-shadow-pinkish/40;
+    @apply shadow-pinkish/40 bg-pinkish border-pinkish text-secondary hover:inset-shadow-sm hover:inset-shadow-pinkish/40;
   }
 
   .btn-short {
-    @apply shadow-gold/40 bg-gold/20 border-gold text-gold hover:inset-shadow-sm hover:inset-shadow-gold/40;
+    @apply shadow-gold/40 bg-gold border-gold text-secondary hover:inset-shadow-sm hover:inset-shadow-gold/40;
   }
 
   .btn-long {
-    @apply shadow-sage/40 bg-sage/20 border-sage text-sage hover:inset-shadow-sm hover:inset-shadow-sage/40;
+    @apply shadow-sage/40 bg-sage border-sage text-secondary hover:inset-shadow-sm hover:inset-shadow-sage/40;
   }
 
   .btn-active {
-    @apply border-2 shadow-lg animate-pulse;
+    @apply border-2 shadow-lg;
+  }
+
+  .btn-inactive {
+    @apply bg-gray-300! text-gray-500! shadow-gray-300! hover:inset-shadow-none! border border-gray-300;
   }
 
   /* State Buttons */
   .btn-default {
-    @apply cursor-pointer px-3 py-2 rounded-lg bg-primary text-secondary shadow-sm shadow-primary/40 hover:shadow-primary/60 transition-shadow;
+    @apply cursor-pointer px-3 py-2 bg-primary text-secondary shadow-sm shadow-primary/40 hover:shadow-primary/60 transition-shadow;
     @apply disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed disabled:shadow-none;
   }
 
@@ -63,7 +67,7 @@
 
   /* Inputs */
   .input {
-    @apply border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors;
+    @apply border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors;
   }
 
   .checkbox {
@@ -78,21 +82,25 @@
 
   /* Session */
   .session-item {
-    @apply flex items-center justify-between p-3 border border-gray-300 rounded-lg transition-colors;
+    @apply flex items-start justify-between p-3 border border-gray-300 transition-colors;
     @apply hover:inset-shadow-sm hover:shadow-gray-300;
   }
 
   .session-current {
-    @apply shadow-sm shadow-sage/40 bg-sage/20 border-sage text-sage hover:inset-shadow-sm hover:inset-shadow-sage/40;
+    @apply border-primary;
+  }
 
-    button {
-      @apply border-sage font-semibold;
-    }
+  .session-focus {
+    @apply text-pinkish;
+  }
+
+  .session-tasks {
+    @apply text-sage;
   }
 
   /* Text Colors */
   .text-message {
-    @apply font-bold font-mono;
+    @apply font-bold text-xs uppercase tracking-wide text-gray-500;
   }
   .text-focus {
     @apply text-pinkish;
@@ -102,6 +110,73 @@
   }
   .text-long-break {
     @apply text-sage;
+  }
+
+  /* BG Topo */
+  .bg-topo {
+    background-image: url("/topo-map.svg");
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    position: absolute;
+    z-index: 0;
+  }
+
+  .topo-map-wrap {
+    position: fixed;
+    inset: 0;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .topo-map {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: topo-map-pulse 6s ease-in-out infinite;
+  }
+
+  .topo-map-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .topo-map-svg path {
+    fill: var(--topo-color);
+    fill-opacity: calc(0.01 * var(--topo-progress) + 0.01);
+    stroke: var(--topo-color);
+    stroke-width: 2px;
+    stroke-opacity: calc(0.1 * var(--topo-progress) + 0.03);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @keyframes topo-map-pulse {
+    0%,
+    100% {
+      opacity: 0.85;
+      filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0));
+    }
+    50% {
+      opacity: 1;
+      filter: drop-shadow(0 0 10px var(--topo-color));
+    }
+  }
+
+  .topo-map-wrap[data-mode="WORK"] {
+    --topo-color: var(--pinkish);
+  }
+
+  .topo-map-wrap[data-mode="SHORT_BREAK"] {
+    --topo-color: var(--gold);
+  }
+
+  .topo-map-wrap[data-mode="LONG_BREAK"] {
+    --topo-color: var(--sage);
   }
 }
 

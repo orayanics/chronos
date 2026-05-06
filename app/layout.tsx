@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${interSans.variable} ${jetbrains.variable} overflow-hidden! min-h-screen antialiased`}
+      className={`${interSans.variable} ${jetbrains.variable} overflow-hidden! min-h-svh antialiased`}
     >
       <body>{children}</body>
     </html>
